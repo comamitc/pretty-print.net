@@ -11,12 +11,10 @@
 ;; TODO: eventually abstract the route to take a type
 ;; this will help use a map of functions to the type.
 (defroutes app-routes
-  (POST "/format/:dest" request
-    ;;(println request)
-    (let [dest (:dest (:params request))
+  (POST "/format/:tipe" request
+    (let [tipe (:tipe (:params request))
           body (decode-body! request)]
-      ;;(println (str "Destination: " dest))
-      (format-clj! (:input body)))) ;; TODO: just echos request currently
+      (format-clj! (:input body) tipe)))
   (route/not-found "Not Found"))
 
 ;; TODO: incorporate a configurable port number
