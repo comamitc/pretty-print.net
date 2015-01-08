@@ -30,7 +30,5 @@
   and transforms it into a formatted output using clojure.pprint/write."
   [input tipe]
   (let [in-lit    (str-to-literal! input)
-        formatted (format-literal! in-lit tipe)
-        out-str   (literal-to-str! formatted)]
-        (println out-str)
-        out-str))
+        formatted (format-literal! in-lit tipe)]
+        (literal-to-str! formatted)))
