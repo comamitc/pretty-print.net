@@ -1,6 +1,6 @@
 (defproject pp-server "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "pretty-printer server side for pretty-print.net"
+  :url "http://pretty-print.net"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.3.1"]
