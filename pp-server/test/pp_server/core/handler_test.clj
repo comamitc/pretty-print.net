@@ -1,7 +1,7 @@
-(ns cpp-server.core.handler-test
+(ns pp-server.core.handler-test
   (:require [clojure.test :refer :all]
             [ring.mock.request :as mock]
-            [cpp-server.core.handler :refer :all]))
+            [pp-server.core.handler :refer :all]))
 
 (deftest test-app
   (testing "main route"

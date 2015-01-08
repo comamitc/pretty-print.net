@@ -1,4 +1,4 @@
-# cpp-server
+# pp-server
 
 FIXME
 
@@ -12,4 +12,8 @@ You will need [Leiningen][] 2.0.0 or above installed.
 
 To start a web server for the application, run:
 
-    lein ring server
+    lein ring server-headless
+
+## License
+
+Copyright (c) 2015 Mitch Comardo and contributors
