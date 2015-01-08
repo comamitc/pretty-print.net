@@ -26,6 +26,8 @@
   (str literal))
 
 (defn format-clj!
+  "Clojure formatting function that takes a unformatted-input and format type
+  and transforms it into a formatted output using clojure.pprint/write."
   [input tipe]
   (let [in-lit    (str-to-literal! input)
         formatted (format-literal! in-lit tipe)
