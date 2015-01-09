@@ -1,9 +1,16 @@
 (ns pp-server.format.clojure-pp
   (:require [clojure.tools.reader :as r]
-            [clojure.pprint :refer [write code-dispatch simple-dispatch]]
-            [pp-server.format.utils :refer [str-to-literal!]]))
+            [clojure.pprint :refer [write code-dispatch simple-dispatch]]))
 
-(def dispatch-mode {:clojure code-dispatch :edn simple-dispatch})
+(def dispatch-mode
+  {"clojure"  code-dispatch
+   "edn"      simple-dispatch})
+
+(defn str-to-literal!
+  "Takes valid clojure as input and transforms it to a clojure literal for
+  formating."
+  [string]
+  (r/read-string string))
 
 (defn- format-literal!
   "Takes a literal and formats it using the built in clojure.pprint/write
@@ -12,7 +19,7 @@
   (write literal
          :pretty true
          :stream nil
-         :dispatch ((keyword tipe) dispatch-mode)))
+         :dispatch (get dispatch-mode tipe)))
 
 (defn- literal-to-str!
   "Takes valid formatter clojure literal as input and transforms it to a string

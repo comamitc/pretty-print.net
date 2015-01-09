@@ -2,14 +2,8 @@
   (:require [compojure.core :refer :all]
             [cheshire.core :refer [parse-string]]
             [compojure.route :as route]
-            [pp-server.format.clojure-pp :refer [format-clj!]]
-            [pp-server.format.js-pp :refer [format-js!]]
+            [pp-server.core.fn-maps :refer [mapfn]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
-
-(def typefn 
-  {"edn"      format-clj!
-   "clojure"  format-clj!
-   "json"     format-js!  })
 
 (defn- decode-body! [req]
   (parse-string (slurp (:body req)) true))
@@ -17,8 +11,8 @@
 (defroutes app-routes
   (POST "/format/:tipe" request
     (let [tipe (:tipe (:params request))
-          body (decode-body! request)]
-      ((get typefn tipe) (:input body) tipe)))
+          input (:input (decode-body! request))]
+      (mapfn input tipe)))
   (route/not-found "Not Found"))
 
 (def app (wrap-defaults app-routes
