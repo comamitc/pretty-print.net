@@ -14,8 +14,6 @@
   [word]
   (clojure.string/lower-case word))
 
-;; TODO: try catch here in case the parser throws an error
-;; capture things like basic error and line number if possible
 (defn mapfn
   "Retrieves a function from the typefn map to execute formatting. Function 
   signature must be `[input format-type]`."
