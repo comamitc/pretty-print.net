@@ -1,3 +1,3 @@
-require([], function(router) {
-  //TODO;
+require(['app/js/main-page'], function(mainPage) {
+  mainPage.init();
 });

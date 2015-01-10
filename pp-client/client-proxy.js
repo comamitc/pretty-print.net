@@ -30,7 +30,7 @@ app.use(express.static(__dirname));
 app.get('*', function(req, res) {
   console.log('hitting route');
   res.sendFile(
-    path.resolve('./main.html'));
+    path.resolve('./index.html'));
 });
 
 // start server
