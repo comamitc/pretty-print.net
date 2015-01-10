@@ -2,7 +2,7 @@
   (:require [pp-server.format.clojure-pp :refer [format-clj!]]
             [pp-server.format.web-pp :refer [format-json!]]
             [pp-server.format.data-pp :refer [format-xml!]]
-            [pp-server.format.parse-error-handler :refer [parse-exception]]))
+            [pp-server.format.parse-error-handler :refer [parse-exception!]]))
 
 (def typefn
   {"clojure"  format-clj!
@@ -22,6 +22,10 @@
   [input tipe]
   (let [type-norm (to-lower tipe)]
     (try 
-      ((get typefn type-norm) input type-norm)
-      ;; TODO: just captures the stacktrace so far
-      (catch Exception e (parse-exception e))))) 
+      {:status 200
+       :headers {"Content-Type" "text/plain"}
+       :body ((get typefn type-norm) input type-norm)}
+      (catch Exception e 
+        {:status 400
+         :headers {"Content-Type" "application/json"}
+         :body (parse-exception! e)})))) 

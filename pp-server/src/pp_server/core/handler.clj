@@ -1,7 +1,7 @@
 (ns pp-server.core.handler
   (:require [compojure.core :refer :all]
-            [cheshire.core :refer [parse-string]]
             [compojure.route :as route]
+            [cheshire.core :refer [parse-string]]
             [pp-server.core.fn-maps :refer [mapfn]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
