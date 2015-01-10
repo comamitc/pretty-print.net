@@ -1,4 +1,4 @@
-(ns pp-server.format.parse-error-handler
+(ns pp-jvm.format.parse-error-handler
 	(:require [cheshire.core :refer [generate-string]]))
 
 (defn- extract-column

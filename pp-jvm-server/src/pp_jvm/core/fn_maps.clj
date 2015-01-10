@@ -1,8 +1,8 @@
-(ns pp-server.core.fn-maps
-  (:require [pp-server.format.clojure-pp :refer [format-clj!]]
-            [pp-server.format.web-pp :refer [format-json!]]
-            [pp-server.format.data-pp :refer [format-xml!]]
-            [pp-server.format.parse-error-handler :refer [parse-exception!]]
+(ns pp-jvm.core.fn-maps
+  (:require [pp-jvm.format.clojure-pp :refer [format-clj!]]
+            [pp-jvm.format.web-pp :refer [format-json!]]
+            [pp-jvm.format.data-pp :refer [format-xml!]]
+            [pp-jvm.format.parse-error-handler :refer [parse-exception!]]
             [clojure.tools.logging :as log]))
 
 (def typefn

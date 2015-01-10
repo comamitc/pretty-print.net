@@ -1,4 +1,4 @@
-(ns pp-server.format.clojure-pp
+(ns pp-jvm.format.clojure-pp
   (:require [clojure.tools.reader :as r]
             [clojure.pprint :refer [write code-dispatch simple-dispatch]]))
 

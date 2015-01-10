@@ -1,4 +1,4 @@
-(ns pp-server.format.web-pp
+(ns pp-jvm.format.web-pp
   (:require [cheshire.core :refer [parse-string generate-string]]))
 
 (defn format-json!

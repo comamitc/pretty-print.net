@@ -1,4 +1,4 @@
-(ns pp-server.format.data-pp)
+(ns pp-jvm.format.data-pp)
 
 ;; http://nakkaya.com/2010/03/27/pretty-printing-xml-with-clojure/
 (defn format-xml!
