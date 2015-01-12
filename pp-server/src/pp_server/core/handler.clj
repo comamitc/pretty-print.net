@@ -13,7 +13,7 @@
   (POST "/format/:tipe" request
     (let [tipe (:tipe (:params request))
           input (:input (decode-body! request))]
-      (log/debug "Formating " input " to type " tipe)
+      (log/debug "Formating to type " tipe " for input " input)
       (mapfn input tipe)))
   (route/not-found "Not Found"))
 
