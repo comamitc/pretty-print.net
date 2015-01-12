@@ -20,8 +20,7 @@
 	{:line (extract-line msg) :column (extract-column msg) :msg msg})
 
 (defn parse-exception!
-  [err]
-  (let [msg (.getMessage err)]
-  	(generate-string {:line (extract-line msg) 
-  		              :column (extract-column msg) 
-  		              :msg msg})))
+  [msg]
+  (generate-string {:line (extract-line msg)
+  		              :column (extract-column msg)
+  		              :msg msg}))
