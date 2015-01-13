@@ -1,6 +1,6 @@
 # pp-cljs-server
 
-A Clojure library designed to ... well, that part is up to you.
+A cljs server that will format other things. JS has more libraries!
 
 ## Usage
 
@@ -8,7 +8,6 @@ FIXME
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2015 Mitch Comardo and contributors
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the MIT License
