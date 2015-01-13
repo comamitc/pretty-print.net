@@ -1,16 +1,22 @@
 (ns pp-jvm.format.clojure-pp
   (:require [clojure.tools.reader :as r]
+            [clojure.tools.reader.reader-types :as rt]
             [clojure.pprint :refer [write code-dispatch simple-dispatch]]))
 
 (def dispatch-mode
   {"clojure"  code-dispatch
    "edn"      simple-dispatch})
 
+(defn- read-all
+  [input]
+  (let [eof (Object.)]
+    (take-while #(not= % eof) (repeatedly #(r/read input false eof)))))
+
 (defn str-to-literal!
   "Takes valid clojure as input and transforms it to a clojure literal for
   formating."
   [string]
-  (r/read-string string))
+  (read-all (rt/string-push-back-reader string)))
 
 (defn- format-literal!
   "Takes a literal and formats it using the built in clojure.pprint/write
