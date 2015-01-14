@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "body-parser": "^1.10.1",
     "express": "^4.10.7",
     "js-beautify": "^1.5.4",
     "moment": "^2.9.0"

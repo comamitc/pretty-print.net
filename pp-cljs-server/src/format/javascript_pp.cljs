@@ -2,9 +2,10 @@
   (:require [cljs.nodejs :as node]))
 
 (def beautify (.-js_beautify (node/require "js-beautify")))
+(def default-settings {:indent_size           2
+                       :indent_char           " "
+                       :max_preserve_newlines 2   })
 
-(defn format-js [input]
+(defn format-js [input settings]
   ;; TODO: move settings to UI side
-  (beautify input {:indent_size           2
-                   :indent_char           " "
-                   :max_preserve_newlines 2}))
+  (beautify input (merge default-settings settings)))

@@ -1,5 +1,6 @@
 (ns utils
-  (:require [cljs.nodejs :as node]))
+  (:require [cljs.nodejs :as node]
+            [clojure.walk]))
 
 (def moment (node/require "moment"))
 
@@ -13,3 +14,8 @@
 ;; just adds a timestamp in front of a string
 (defn tlog [msg]
   (.log js/console (str (now) " - " msg)))
+
+(defn convert-json [json]
+  (-> json
+      js->clj
+      clojure.walk/keywordize-keys))
