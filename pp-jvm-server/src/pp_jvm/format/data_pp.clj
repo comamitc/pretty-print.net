@@ -1,7 +1,7 @@
 (ns pp-jvm.format.data-pp)
 
 ;; http://nakkaya.com/2010/03/27/pretty-printing-xml-with-clojure/
-(defn format-xml!
+(defn format-xml
   "Takes a valid input xml input and pretty prints using standard java APIs"
   [input tipe]
   (let [in (javax.xml.transform.stream.StreamSource.
