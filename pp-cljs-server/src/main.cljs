@@ -1,7 +1,8 @@
 (ns main
   (:require [clojure.walk]
             [cljs.nodejs :as node]
-            [utils :as util]))
+            [utils :as util]
+            [format.javascript-pp :refer [format-js]]))
 
 (def http (node/require "http"))
 (def express (node/require "express"))
@@ -12,11 +13,14 @@
     js->clj
     clojure.walk/keywordize-keys))
 
+(def typefns {"js" format-js})
+
 (defn- start-server []
   (doto app
 
     ;; routes
-    (.get "/" (fn [req res] (.send res "hello world"))))
+    (.post "/cljs/format/:tipe"
+      (fn [req res] (.send res "hello world"))))
 
     ;; create the http server from the express app
     (let [http-server (.createServer http app)
@@ -27,5 +31,5 @@
 
 (defn -main [& args]
   (start-server))
- 
+
 (set! *main-cli-fn* -main)
