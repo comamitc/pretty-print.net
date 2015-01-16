@@ -5,11 +5,16 @@
             [pp-jvm.format.parse-error-handler :refer [parse-exception!]]
             [clojure.tools.logging :as log]))
 
+(defn- format-scala
+  [input tipe]
+  (ppjvm.format.ScalaFormat/formatScala input tipe))
+
 (def typefn
   {"clj"      format-clj
    "edn"      format-clj
    "json"     format-json
-   "xml"      format-xml})
+   "xml"      format-xml
+   "scala"    format-scala})
 
 (defn- to-lower
   [word]
