@@ -4,6 +4,7 @@
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [clj-beautify "0.1.0"]
+                 [ring-refresh "0.1.1"]
                  [compojure "1.3.1"]
                  [ring/ring-defaults "0.1.2"]
                  [cheshire "5.3.1"]

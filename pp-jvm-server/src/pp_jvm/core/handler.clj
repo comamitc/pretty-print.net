@@ -1,5 +1,6 @@
 (ns pp-jvm.core.handler
-  (:require [compojure.core :refer :all]
+  (:require [ring.middleware.refresh :refer [wrap-refresh]]
+            [compojure.core :refer :all]
             [compojure.route :as route]
             [cheshire.core :refer [parse-string]]
             [pp-jvm.core.fn-maps :refer [mapfn]]
@@ -17,6 +18,6 @@
       (mapfn input tipe)))
   (route/not-found "Not Found"))
 
-(def app (wrap-defaults app-routes
+(def app (wrap-defaults (wrap-refresh app-routes)
     ;; turn off anti-forgery crap for now
     (assoc-in site-defaults [:security :anti-forgery] false)))
