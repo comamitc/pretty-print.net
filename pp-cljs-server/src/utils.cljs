@@ -15,7 +15,5 @@
 (defn tlog [msg]
   (.log js/console (str (now) " - " msg)))
 
-(defn convert-json [json]
-  (-> json
-      js->clj
-      clojure.walk/keywordize-keys))
+(defn json-parse [js-obj]
+  (clojure.walk/keywordize-keys (js->clj js-obj)))

@@ -1,8 +1,7 @@
 (ns main
-  (:require [clojure.walk]
-            [cljs.nodejs :as node]
+  (:require [cljs.nodejs :as node]
             [utils :as util]
-            [format.javascript-pp :refer [format-js]]))
+            [format.javascript-pp :as web]))
 
 (def http (node/require "http"))
 (def express (node/require "express"))
@@ -10,9 +9,11 @@
 (def app (express))
 
 (def config
-  (util/convert-json (node/require "./config.json")))
+  (util/json-parse (node/require "./config.json")))
 
-(def typefns {"js" format-js})
+(def typefns {"js"   web/format-js
+              "css"  web/format-css
+              "html" web/format-html})
 
 (defn- start-server []
   (doto app
@@ -23,17 +24,15 @@
     ;; routes
     (.post "/cljs/format/:tipe"
       (fn [req res]
-        (let [params   (util/convert-json (.-params req))
-              body     (util/convert-json (.-body req))
+        (let [params   (util/json-parse (.-params req))
+              body     (util/json-parse (.-body req))
               tipe     (:tipe params)
               input    (:input body)
               settings (or (:settings body) {})]
-          (util/tlog req)
-          ((get typefns tipe) input settings))))
+          (.send (.status res 200) ((get typefns tipe) input settings)))))
 
     ;; not found
-    ;;(.use (fn [req res] (.send (.status res 404) "Not Found")))
-    )
+    (.use (fn [req res] (.send (.status res 404) "Not Found"))))
 
     ;; create the http server from the express app
     (let [http-server (.createServer http app)
@@ -45,4 +44,5 @@
 (defn -main [& args]
   (start-server))
 
+(enable-console-print!)
 (set! *main-cli-fn* -main)
