@@ -12,3 +12,4 @@ pom.xml
 /public/css/main.min.css
 /public/js/main.js
 /public/js/main.min.js
+*.diff
