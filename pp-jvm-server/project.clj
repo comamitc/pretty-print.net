@@ -23,8 +23,7 @@
   :scala-source-path "src/main/scala"
   :scala-version "2.10.4"
   :prep-tasks ["scalac"]
-  :repositories [["sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"}]
-  ["sonatype-ss" {:url "http://oss.sonatype.org/content/repositories/snapshots"}]]
+  :repositories [["sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"}]]
   :ring {:handler pp-jvm.core.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
