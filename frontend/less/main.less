@@ -107,21 +107,43 @@
 //------------------------------------------------------------------------------
 
 @headerColor: #5a83d5;
+@primaryGreen: #60ac30;
 
 //------------------------------------------------------------------------------
 // Classes
 //------------------------------------------------------------------------------
 
 .body-f39e6 {
+  .box-sizing();
   font-family: "Open Sans";
 }
 
-.outer-c5e7d {
+.header-outer-c5e7d {
   background: @headerColor;
   padding: 15px 0;
 }
 
-.inner-0f889 {
+.header-inner-0f889 {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.body-outer-7cb5e {
+  background: #eee;
+}
+
+.body-inner-40af1 {
+  margin: 0 auto;
+  padding: 30px 0;
+  width: 1200px;
+}
+
+.ftr-outer-6bcd3 {
+  background: #222;
+}
+
+.ftr-inner-557c9 {
+  color: #fff;
   margin: 0 auto;
   width: 1200px;
 }
@@ -147,4 +169,45 @@
 .net-84e9a {
   .font-light(22px);
   text-transform: lowercase;
+}
+
+.big-select-51b29 {
+  font-size: 18px;
+  padding: 5px 10px;
+}
+
+.text-f3988 {
+  height: 600px;
+  width: 100%;
+}
+
+.instructions-b15d3 {
+  .font-light(36px);
+  margin: 15px 0;
+  padding: 0;
+
+  .fa {
+    font-size: 28px;
+    margin-left: 12px;
+  }
+}
+
+.left-body-ca07e {
+  float: left;
+  width: 72%;
+}
+
+.right-body-caf9a {
+  float: right;
+  width: 25%;
+}
+
+.btn-2d976 {
+  background: @primaryGreen;
+  border: 0;
+  color: #fff;
+  .font-normal(24px);
+  padding: 8px 16px;
+  .rounded(4px);
+  width: 100%;
 }
