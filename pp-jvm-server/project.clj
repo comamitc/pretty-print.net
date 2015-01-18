@@ -10,18 +10,21 @@
                  [cheshire "5.3.1"]
                  [org.clojure/tools.logging "0.3.1"]
                  [org.slf4j/slf4j-log4j12 "1.7.1"]
-                 [org.scalariform/scalariform_2.9.2 "0.1.4"]
-                 [org.scala-lang/scala-library "2.9.2"]
+                 [org.scala-lang/scala-library "2.10.4"]
+                 [org.scala-lang/scala-reflect "2.10.4"]
+                 [org.scalariform/scalariform_2.10 "0.1.4"]
                  [log4j/log4j "1.2.17" :exclusions [javax.mail/mail
                                                     javax.jms/jms
                                                     com.sun.jmdk/jmxtools
                                                     com.sun.jmx/jmxri]]]
   :plugins [[lein-ring "0.8.13"]
-            [lein-scalac "0.1.0"]]
+            [io.tomw/lein-scalac "0.1.2"]]
   :source-paths ["src" "src/main/clj"]
   :scala-source-path "src/main/scala"
+  :scala-version "2.10.4"
   :prep-tasks ["scalac"]
-  :repositories [["sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"}]]
+  :repositories [["sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"}]
+  ["sonatype-ss" {:url "http://oss.sonatype.org/content/repositories/snapshots"}]]
   :ring {:handler pp-jvm.core.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
