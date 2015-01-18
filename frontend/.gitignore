@@ -2,8 +2,13 @@ pom.xml
 *jar
 /lib/
 /classes/
+/node_modules
 /out/
 /target/
 .lein-deps-sum
 .lein-repl-history
 .lein-plugins/
+
+/public/css/main.min.css
+/public/js/main.js
+/public/js/main.min.js
