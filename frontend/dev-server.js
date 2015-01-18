@@ -1,3 +1,6 @@
+// This server just makes it easier to do frontend development without having
+// to load the Clojure server at the same time.
+
 var express = require('express'),
   path = require('path'),
   httpProxy = require('http-proxy'),
@@ -5,12 +8,17 @@ var express = require('express'),
 
 httpProxy.timeout = 25000;
 
+// TODO: read these ports from a config file
+const devServerPort = 7000,
+  clojureProxyPort = 3000,
+  nodeProxyPort = 5000;
+
 var clojureRouter = new httpProxy.createProxyServer({
-  target: "http://localhost:3000"
+  target: "http://localhost:" + clojureProxyPort
 });
 
 var nodeRouter = new httpProxy.createProxyServer({
-  target: "http://localhost:5000"
+  target: "http://localhost:" + nodeProxyPort
 });
 
 function clojureProxy() {
@@ -41,16 +49,12 @@ function nodeProxy() {
   };
 }
 
-app.use(clojureProxy('localhost', 3000));
-app.use(express.static(__dirname));
+app.use(clojureProxy('localhost', clojureProxyPort));
 
-app.get('*', function(req, res) {
-  console.log('hitting route');
-  res.sendFile(
-    path.resolve('./index.html'));
-});
+// serve static files out of /public
+app.use(express.static(__dirname + '/public'));
 
 // start server
-var server = app.listen(7000, function() {
-  console.log('Listening on port %d', server.address().port);
+var server = app.listen(devServerPort, function() {
+  console.log('pretty-print.net dev server listening on port ' + devServerPort);
 });

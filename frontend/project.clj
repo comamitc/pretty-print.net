@@ -5,7 +5,8 @@
 
   :dependencies [
     [org.clojure/clojure "1.6.0"]
-    [org.clojure/clojurescript "0.0-2665"]]
+    [org.clojure/clojurescript "0.0-2665"]
+    [hiccups "0.3.0"]]
 
   :plugins [[lein-cljsbuild "1.0.4"]]
 
