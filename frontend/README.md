@@ -1,46 +1,38 @@
-# pp-cljs-client
+# frontend
 
-FIXME: Write a one-line description of your library/project.
+## Dev Workflow
 
-## Overview
+1. Install Dependencies
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+```sh
+$> npm install -g grunt-cli nodemon
+$> npm install
+```
 
-## Setup
+2. Run NodeJS Server
 
-First-time Clojurescript developers, add the following to your bash .profile:
+```sh
+$> nodemon dev-server.js
+```
 
-    export LEIN_FAST_TRAMPOLINE=y
-    alias cljsbuild="lein trampoline cljsbuild $@"
+3. Run CLJS build (new terminal)
 
-To avoid compiling ClojureScript for each build, AOT Clojurescript locally in your project with the following:
+```sh
+$> lein clean && lein cljsbuild auto
+```
 
-    ./scripts/compile_cljsc
+4. Run grunt (new terminal)
 
-Subsequent dev builds can use:
+```sh
+$> grunt
+```
 
-    lein cljsbuild auto dev
+5. Open your browser
 
-To start a Node REPL (requires rlwrap):
+`http://localhost:<port>/`
 
-    ./scripts/repl
-
-To get source map support in the Node REPL:
-
-    lein npm install
-
-Clean project specific out:
-
-    lein clean
-     
-Optimized builds:
-
-    lein cljsbuild once release     
-
-For more info on Cljs compilation, read [Waitin'](http://swannodette.github.io/2014/12/22/waitin/).
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright (c) 2015 Mitch Comardo and contributors
 
-Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
