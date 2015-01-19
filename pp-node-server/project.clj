@@ -1,4 +1,4 @@
-(defproject pp-cljs-server "0.1.0-SNAPSHOT"
+(defproject pp-node-server "0.1.0-SNAPSHOT"
   :description "pretty-printer server side for pretty-print.net"
   :url "http://pretty-print.net"
   :cljsbuild

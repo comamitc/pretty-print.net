@@ -1,5 +1,5 @@
 {
-  "name": "pp-cljs-server",
+  "name": "pp-node-server",
   "version": "0.0.1",
   "private": true,
   "dependencies": {

@@ -22,7 +22,7 @@
     (.use (.urlencoded body-parser (clj->js {:extended true})))
 
     ;; routes
-    (.post "/cljs/format/:tipe"
+    (.post "/node/format/:tipe"
       (fn [req res]
         (let [params   (util/json-parse (.-params req))
               body     (util/json-parse (.-body req))
@@ -39,7 +39,7 @@
           port (:cljs-server-port config)]
       ;; go time!
       (.listen http-server port)
-      (util/tlog (str "CLJS-server listening on port " port))))
+      (util/tlog (str "NodeJS-server listening on port " port))))
 
 (defn -main [& args]
   (start-server))

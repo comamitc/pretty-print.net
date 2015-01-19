@@ -1,4 +1,4 @@
-# pp-cljs-server
+# pp-node-server
 
 A cljs server that will format other things. JS has more libraries!
 

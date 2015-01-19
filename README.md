@@ -18,7 +18,7 @@ This project aims to build such a service and improve the usability of working w
 lein ring server-headless
 ```
 
-### pp-cljs-server
+### pp-node-server
 
 ```sh
 lein cljsbuild once && node server.js
