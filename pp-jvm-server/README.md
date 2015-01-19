@@ -1,6 +1,28 @@
 # pp-jvm-server
 
-FIXME
+# API
+
+### POST /jvm/format/:type `{clj|edn|json|xml|scala}`
+
++ Request (application/json)
+```
+{
+    "input": "(defn foo [x] (+ x 1))"
+}
+```
++ Response 200 (text/plain)
+```
+(defn foo [x]
+    (+ x 1))
+```
++ Response 400 (application/json)
+```
+{
+    "line": "1",
+    "column": "13",
+    "msg": "Expected ';' but found ')'"
+}
+```
 
 ## Prerequisites
 
