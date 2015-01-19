@@ -1,0 +1,5 @@
+{
+  "cljs-server-port": 5000,
+  "jvm-server-port": 7000,
+  "dev-server-port": 3000
+}
