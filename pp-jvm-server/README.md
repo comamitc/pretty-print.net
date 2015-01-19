@@ -1,4 +1,4 @@
-# pp-server
+# pp-jvm-server
 
 FIXME
 

@@ -13,7 +13,7 @@
 (defn- decode-body! [req] (parse-string (slurp (:body req)) true))
 
 (defroutes app-routes
-  (POST "/data/format/:tipe" request
+  (POST "/clj/format/:tipe" request
     (let [tipe (:tipe (:params request))
           input (:input (decode-body! request))]
       (log/debug "Formating to type " tipe " for input " input)
