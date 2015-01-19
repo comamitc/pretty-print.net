@@ -4,7 +4,7 @@
 var express = require('express'),
   path = require('path'),
   httpProxy = require('http-proxy'),
-  config = ('../config/config.json'),
+  config = require('../config/config.json'),
   app = express();
 
 httpProxy.timeout = 25000;
