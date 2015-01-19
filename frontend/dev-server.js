@@ -4,14 +4,14 @@
 var express = require('express'),
   path = require('path'),
   httpProxy = require('http-proxy'),
+  config = ('../config/config.json'),
   app = express();
 
 httpProxy.timeout = 25000;
 
-// TODO: read these ports from a config file
-const devServerPort = 7000,
-  clojureProxyPort = 3000,
-  nodeProxyPort = 5000;
+const devServerPort = config["dev-server-port"],
+  clojureProxyPort = config["jvm-server-port"],
+  nodeProxyPort = config["cljs-server-port"];
 
 var clojureRouter = new httpProxy.createProxyServer({
   target: "http://localhost:" + clojureProxyPort
@@ -56,5 +56,6 @@ app.use(express.static(__dirname + '/public'));
 
 // start server
 var server = app.listen(devServerPort, function() {
-  console.log('pretty-print.net dev server listening on port ' + devServerPort);
+  console.log('pretty-print.net dev server listening on port ' +
+    devServerPort);
 });

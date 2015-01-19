@@ -9,7 +9,7 @@
 (def app (express))
 
 (def config
-  (util/json-parse (node/require "./config.json")))
+  (util/json-parse (node/require "../config/config.json")))
 
 (def typefns {"js"   web/format-js
               "css"  web/format-css
@@ -36,7 +36,7 @@
 
     ;; create the http server from the express app
     (let [http-server (.createServer http app)
-          port (:port config)]
+          port (:cljs-server-port config)]
       ;; go time!
       (.listen http-server port)
       (util/tlog (str "CLJS-server listening on port " port))))

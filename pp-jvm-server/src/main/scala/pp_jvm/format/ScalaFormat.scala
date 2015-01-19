@@ -4,7 +4,6 @@ import scalariform.formatter.preferences._
 import scalariform.formatter.ScalaFormatter
 import scalariform.parser.ScalaParserException
 
-// TODO: rewrite this in java?
 object ScalaFormat {
   val preferences = FormattingPreferences()
     .setPreference(DoubleIndentClassDeclaration, true)

@@ -7,6 +7,7 @@
                  [ring-refresh "0.1.1"]
                  [compojure "1.3.1"]
                  [ring/ring-defaults "0.1.2"]
+                 [ring/ring-jetty-adapter "0.3.7"]
                  [cheshire "5.3.1"]
                  [org.clojure/tools.logging "0.3.1"]
                  [org.slf4j/slf4j-log4j12 "1.7.1"]

@@ -1,4 +1,5 @@
 (ns pp-jvm.core.handler
+  (:use ring.adapter.jetty)
   (:require [ring.middleware.refresh :refer [wrap-refresh]]
             [compojure.core :refer :all]
             [compojure.route :as route]
@@ -7,8 +8,9 @@
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [clojure.tools.logging :as log]))
 
-(defn- decode-body! [req]
-  (parse-string (slurp (:body req)) true))
+(def config (parse-string (slurp "../config/config.json") true))
+
+(defn- decode-body! [req] (parse-string (slurp (:body req)) true))
 
 (defroutes app-routes
   (POST "/data/format/:tipe" request
@@ -18,6 +20,4 @@
       (mapfn input tipe)))
   (route/not-found "Not Found"))
 
-(def app (wrap-defaults (wrap-refresh app-routes)
-    ;; turn off anti-forgery crap for now
-    (assoc-in site-defaults [:security :anti-forgery] false)))
+(run-jetty (wrap-refresh app-routes) {:port (:jvm-server-port config)})

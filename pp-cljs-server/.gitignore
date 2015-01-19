@@ -8,5 +8,4 @@ pom.xml.asc
 /.lein-*
 /.nrepl-port
 /node_modules
-config.json
 server.js
