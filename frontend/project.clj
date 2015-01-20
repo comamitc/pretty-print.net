@@ -12,6 +12,8 @@
 
   :source-paths ["src"]
 
+  :clean-targets ["target" "public/js/main.js" "public/js/main.min.js"]
+
   :cljsbuild {
     :builds {
       :main {
