@@ -49,7 +49,7 @@
     [:div.ftr-inner-557c9
       "I am a footer."]])
 
-(hiccups/defhtml page []
+(hiccups/defhtml page [hash]
   (header)
   (body)
   (footer))

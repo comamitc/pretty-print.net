@@ -1,10 +1,17 @@
-(ns pp-client.util)
-
-(def $ js/jQuery)
+(ns pp-client.util
+  (:require [jayq.core]))
 
 ;;------------------------------------------------------------------------------
 ;; Util Functions
 ;;------------------------------------------------------------------------------
+
+(defn get-hash
+  []
+  (or (get (clojure.string/split (.-hash js/location) "/") 1) nil))
+
+(defn set-hash
+  [new-hash]
+  (set! (.-hash js/location) new-hash))
 
 (defn log
   "Log a Clojure thing."
@@ -40,5 +47,5 @@
 
 ;; TODO: use `:pre` to asset that opts has at a minimum a URL and success function
 (defn doajax [opts]
-  (let [opts2 (clj->js (merge default-ajax-options opts))]
-    (.ajax $ opts2)))
+  (let [opts2 (merge default-ajax-options opts)]
+    (jayq.core/ajax opts2)))

@@ -1,0 +1,11 @@
+{
+  "restartable": "rs",
+  "verbose": false,
+  "watch": [
+    "dev-server.js"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js json"
+}
