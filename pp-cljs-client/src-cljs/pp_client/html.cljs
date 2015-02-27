@@ -71,8 +71,8 @@
   [:div.col-ace4b
     [:h5.hdr-856fa "Community"]
     [:ul
-      [:li [:a.ftr-link-67c8e {:href mailing-list-url}
-        "Mailing List" [:i.fa.fa-external-link]]]
+      ;;[:li [:a.ftr-link-67c8e {:href mailing-list-url}
+      ;;  "Mailing List" [:i.fa.fa-external-link]]]
       ;; TODO: either make this a link or figure out how to style it as a non-link
       [:li [:a.ftr-link-67c8e {:href "#"} "IRC: #clojurescript"]]]]))
 
@@ -151,12 +151,12 @@
       (when (:msg new-state )
         [:div.error-disp-7c4aa
           [:i.fa.fa-exclamation-circle.fa-2] 
-          [:span.pad-left-0867b "PARSE ERROR"]
-          (when (some? (:line new-state))
-            [:div.line-b55e8 (str "LINE: " (:line new-state))])
-          (when (some? (:column new-state))
-            [:div.col-67be9 (str "COLUMN: " (:column new-state))])
-            [:div.msg-6f5ee (:msg new-state)]])]))
+          [:span.err-ttl-0867b "FORMAT ERROR"]
+            [:div.msg-6f5ee (:msg new-state)]
+            (when (some? (:line new-state))
+              [:div.line-b55e8 (str "LINE: " (:line new-state))])
+            (when (some? (:column new-state))
+              [:div.col-67be9 (str "COLUMN: " (:column new-state))])])]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
