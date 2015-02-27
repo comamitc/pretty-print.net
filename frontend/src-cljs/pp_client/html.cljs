@@ -8,6 +8,7 @@
 ;; HTML is super cool
 ;;------------------------------------------------------------------------------
 
+;; TODO create a reference datastructure that can then be used to create this.
 (hiccups/defhtml input-options []
   [:optgroup {:label "Clojure"}
     [:option {:value "clj"} "Clojure Code"]
@@ -36,10 +37,10 @@
   [:div.left-body-ca07e
     [:textarea#mainTextarea.text-f3988]])
 
-(hiccups/defhtml body []
+(hiccups/defhtml body [hash]
   [:div.body-outer-7cb5e
     [:div.body-inner-40af1
-      [:h2.instructions-b15d3 "Paste EDN below:"]
+      [:h2.instructions-b15d3 (str "Paste " hash " below:")]
       (left-body)
       (right-body)
       [:div.clr-217e3]]])
@@ -51,5 +52,5 @@
 
 (hiccups/defhtml page [hash]
   (header)
-  (body)
+  (body hash)
   (footer))
