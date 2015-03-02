@@ -1,5 +1,7 @@
 (ns pp-client.html
+  (:require-macros [hiccups.core :as hiccups])
   (:require
+    hiccups.runtime
     [pp-client.dom :refer [by-id]]
     [pp-client.util :refer [js-log log]]
     [quiescent :include-macros true]
@@ -11,10 +13,94 @@
                   :uri "/format/edn"}))
 
 ;;------------------------------------------------------------------------------
+;; URLs
+;;------------------------------------------------------------------------------
+
+(defn- url [path]
+  (if-let [base-href (:base-href config)]
+    (str (replace base-href #"/$" "") path)
+    path))
+
+;;------------------------------------------------------------------------------
 ;; Event triggers
 ;;------------------------------------------------------------------------------ 
 (defn- on-style-change [evt]
   (aset js/window "location" "hash" (str "/format/" evt.target.value)))
+
+;;------------------------------------------------------------------------------
+;; Footer
+;;------------------------------------------------------------------------------
+
+(def github-url "https://github.com/clojure/clojurescript")
+(def issues-url "http://dev.clojure.org/jira/browse/CLJS")
+(def mailing-list-url "http://groups.google.com/group/clojurescript")
+
+(quiescent/defcomponent footer-docs-list []
+  (sablono/html
+  [:div.col-ace4b
+    [:h5.hdr-856fa "Documentation"]
+    [:ul
+      [:li [:a.ftr-link-67c8e {:href (url "/getting-started")} "Getting Started"]]
+      [:li [:a.ftr-link-67c8e {:href (url "/tutorials")} "Tutorials"]]
+      [:li [:a.ftr-link-67c8e {:href (url "/docs")} "Docs"]]
+      [:li [:a.ftr-link-67c8e {:href (url "/cheatsheet")} "Cheatsheet"]]]]))
+
+(quiescent/defcomponent footer-learn-list []
+  (sablono/html
+  [:div.col-ace4b
+    [:h5.hdr-856fa "Learn"]
+    [:ul
+      [:li [:a.ftr-link-67c8e {:href (url "/rationale")} "Rationale"]]
+      [:li [:a.ftr-link-67c8e {:href (url "/faq")} "FAQ"]]]]))
+
+(quiescent/defcomponent footer-community-list []
+  (sablono/html
+  [:div.col-ace4b
+    [:h5.hdr-856fa "Community"]
+    [:ul
+      [:li [:a.ftr-link-67c8e {:href mailing-list-url}
+        "Mailing List" [:i.fa.fa-external-link]]]
+      ;; TODO: either make this a link or figure out how to style it as a non-link
+      [:li [:a.ftr-link-67c8e {:href "#"} "IRC: #clojurescript"]]]]))
+
+(quiescent/defcomponent footer-contribute-list []
+  (sablono/html
+  [:div.col-ace4b
+    [:h5.hdr-856fa "Contribute"]
+    [:ul
+      [:li [:a.ftr-link-67c8e {:href github-url}
+        "GitHub" [:i.fa.fa-external-link]]]
+      [:li [:a.ftr-link-67c8e {:href issues-url}
+        "JIRA / Issues" [:i.fa.fa-external-link]]]]]))
+
+(def cljsinfo-license-url "https://github.com/oakmac/cljs.info/blob/master/LICENSE.md")
+(def clojurescript-license-url "https://github.com/clojure/clojurescript#license")
+
+(quiescent/defcomponent footer-bottom []
+  (sablono/html
+  [:div.bottom-31b43
+    [:div.left-1764b
+      [:p.small-14fbc
+        "ClojureScript is released under the "
+        [:a {:href clojurescript-license-url} "Eclipse Public License 1.0"]
+        " and is Copyright &copy; Rich Hickey."]
+      [:p.small-14fbc
+        "cljs.info is released under the "
+        [:a {:href cljsinfo-license-url} "MIT License"] "."]]
+    [:div.right-e461e
+      [:a.ftr-home-link-2c3b4 {:href (url "/")} "cljs" [:span.ftr-info-a5716 ".info"]]]
+    [:div.clr-43e49]]))
+
+(quiescent/defcomponent footer []
+  (sablono/html
+  [:div.ftr-outer-6bcd3
+    [:div.ftr-inner-557c9
+      (footer-docs-list)
+      (footer-learn-list)
+      (footer-community-list)
+      (footer-contribute-list)
+      [:div.clr-43e49]
+      (footer-bottom)]]))
 
 ;;------------------------------------------------------------------------------
 ;; HTML is super cool
@@ -56,8 +142,7 @@
 (quiescent/defcomponent Footer []
   (sablono/html
     [:footer.ftr-outer-6bcd3
-      [:div.ftr-inner-557c9
-        "I am a footer."]]))
+      (FooterInner)]))
 
 (quiescent/defcomponent Body [state]
   (sablono/html
@@ -69,7 +154,7 @@
               (LeftBody)
               (RightBody)
               [:div.clr-217e3]]]
-      (Footer)]))
+      (footer)]))
 
 ;;------------------------------------------------------------------------------
 ;; State Change and Rendering

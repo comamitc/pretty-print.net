@@ -80,6 +80,11 @@
 @headerColor: #5a83d5;
 @primaryGreen: #60ac30;
 @goldenShower: #F7B23B;
+@footerBlue: #5f7fbf;
+@footerBottomTextColor: #666;
+// NOTE: this is @cljLogoLightBlue with 50% opacity
+// I know there is a LESS function to do this, but not sure how...
+@cljLogoLightBlueHalf: rgba(144, 180, 254, 0.5);
 //------------------------------------------------------------------------------
 // Classes
 //------------------------------------------------------------------------------
@@ -162,4 +167,95 @@
   padding: 8px 16px;
   .rounded(4px);
   width: 100%;
+}
+.footer-outer-5c647 {
+  background: #222;
+}
+.footer-inner-022c2 {
+  margin: 0 auto;
+}
+.faqs-outer-dac3a {
+  background: rgba(90, 131, 213, 0.75);
+}
+.faqs-inner-e9036 {
+  margin: 0 auto;
+}
+.col-ace4b {
+  .box-sizing();
+  float: left;
+  width: 25%;
+  ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+.hdr-856fa {
+  color: #fff;
+  .font-bold(14px);
+  margin: 30px 0 10px 0;
+  padding: 0;
+  text-transform: uppercase;
+}
+.ftr-link-67c8e {
+  color: #aaa;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 0;
+  padding: 0;
+  text-decoration: none;
+  .fa {
+    margin-left: 5px;
+  }
+}
+.ftr-link-67c8e:hover {
+  text-decoration: underline;
+}
+.bottom-31b43 {
+  padding: 40px 0;
+}
+.small-14fbc {
+  color: @footerBottomTextColor;
+  font-size: 12px;
+  margin: 0;
+  padding: 0 0 5px 0;
+  a {
+    color: @cljLogoLightBlueHalf;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+.clr-43e49 {
+  clear: both;
+}
+@footerBottomTextColor: #666;
+.ftr-home-link-2c3b4 {
+  color: @footerBottomTextColor;
+  display: inline-block;
+  .font-bold(28px);
+  text-decoration: none;
+}
+.info-9c06a {
+  color: #fff;
+  .font-light(18px);
+  text-transform: lowercase;
+}
+.ftr-info-a5716 {
+  color: @footerBottomTextColor;
+  .font-light(18px);
+  text-transform: lowercase;
+}
+.ftr-home-link-2c3b4:hover {
+  color: #fff;
+  .ftr-info-a5716 {
+    color: #fff;
+  }
+}
+.left-1764b {
+  float: left;
+}
+.right-e461e {
+  float: right;
 }
