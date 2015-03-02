@@ -11,6 +11,12 @@
                   :uri "/format/edn"}))
 
 ;;------------------------------------------------------------------------------
+;; Event triggers
+;;------------------------------------------------------------------------------ 
+(defn- on-style-change [evt]
+  (aset js/window "location" "hash" (str "/format/" evt.target.value)))
+
+;;------------------------------------------------------------------------------
 ;; HTML is super cool
 ;;------------------------------------------------------------------------------
 
@@ -85,9 +91,6 @@
     (set! anim-frame-id (request-anim-frame render-fn))))
 
 (add-watch state :main on-change-state)
-
-(defn- on-style-change [evt]
-  (aset js/window "location" "hash" (str "/format/" evt.target.value)))
 
 ;;------------------------------------------------------------------------------
 ;; init
