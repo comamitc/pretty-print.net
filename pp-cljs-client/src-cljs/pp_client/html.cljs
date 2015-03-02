@@ -28,7 +28,7 @@
   (swap! state assoc :value response))
 
 (defn- on-style-change [evt]
-  (aset js/window "location" "hash" (str "/format/" evt.target.value)))
+  (aset js/window "location" "hash" (str "/format/" (.-value (.-target evt)))))
 
 (defn- on-btn-click [evt]
   (let [input (:value @state)]
@@ -37,8 +37,8 @@
 ;; Footer
 ;;------------------------------------------------------------------------------
 
-(def github-url "https://github.com/clojure/clojurescript")
-(def issues-url "http://dev.clojure.org/jira/browse/CLJS")
+(def github-url "https://github.com/comamitc/pretty-print.net")
+(def issues-url "https://github.com/comamitc/pretty-print.net/issues")
 (def mailing-list-url "http://groups.google.com/group/clojurescript")
 
 (quiescent/defcomponent footer-docs-list []
@@ -77,7 +77,7 @@
       [:li [:a.ftr-link-67c8e {:href github-url}
         "GitHub" [:i.fa.fa-external-link]]]
       [:li [:a.ftr-link-67c8e {:href issues-url}
-        "JIRA / Issues" [:i.fa.fa-external-link]]]]]))
+        "Issues" [:i.fa.fa-external-link]]]]]))
 
 (def cljsinfo-license-url "https://github.com/oakmac/cljs.info/blob/master/LICENSE.md")
 (def clojurescript-license-url "https://github.com/clojure/clojurescript#license")
@@ -87,14 +87,11 @@
   [:div.bottom-31b43
     [:div.left-1764b
       [:p.small-14fbc
-        "ClojureScript is released under the "
-        [:a {:href clojurescript-license-url} "Eclipse Public License 1.0"]
-        " and is Copyright &copy; Rich Hickey."]
-      [:p.small-14fbc
-        "cljs.info is released under the "
+        "pretty-print.net is released under the "
         [:a {:href cljsinfo-license-url} "MIT License"] "."]]
     [:div.right-e461e
-      [:a.ftr-home-link-2c3b4 {:href (url "/")} "cljs" [:span.ftr-info-a5716 ".info"]]]
+      [:a.ftr-home-link-2c3b4 {:href (url "/")} "pretty-print"
+        [:span.ftr-info-a5716 ".net"]]]
     [:div.clr-43e49]]))
 
 (quiescent/defcomponent footer []

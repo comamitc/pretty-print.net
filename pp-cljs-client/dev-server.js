@@ -24,7 +24,7 @@ var nodeRouter = new httpProxy.createProxyServer({
 function clojureProxy() {
   return function(req, res, next) {
     if (req.url.match(new RegExp('^\/jvm\/format\/'))) {
-      console.log("clojure proxy");
+      //console.log("clojure proxy");
       try {
         clojureRouter.web(req, res);
       } catch (ex) {
