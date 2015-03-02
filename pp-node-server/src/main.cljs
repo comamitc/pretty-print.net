@@ -29,7 +29,11 @@
               tipe     (:tipe params)
               input    (:input body)
               settings (or (:settings body) {})]
-          (.send (.status res 200) ((get typefns tipe) input settings)))))
+          (try
+            (.send (.status res 200) ((get typefns tipe) input settings))
+            (catch :default e
+              ;; TODO: figure out how to parse these errors!
+              (.send (.status res 400) e))))))
 
     ;; not found
     (.use (fn [req res] (.send (.status res 404) "Not Found"))))

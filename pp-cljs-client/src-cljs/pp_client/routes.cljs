@@ -8,13 +8,14 @@
   (:import goog.History))
 
 (secretary/set-config! :prefix "#")
-(def style-map {"edn" 
+(def style-map {"edn"
                  {:id "edn"
                   :desc "EDN"
-                  :uri "/format/edn"}
-                "clj" {:id "clj"
-                       :desc "Clojure"
-                       :uri "/format/clj"}})
+                  :uri "/jvm/format/edn"}
+                "clj"
+                 {:id "clj"
+                  :desc "Clojure"
+                  :uri "/jvm/format/clj"}})
 
 (defn- set-default-uri
   []
@@ -24,8 +25,8 @@
 (defroute "/format/:style" [style]
   (let [norm-style (.toLowerCase style)
         valid-style? (contains? style-map norm-style)]
-    (if valid-style? 
-      (html/init! (get style-map norm-style)) 
+    (if valid-style?
+      (html/init! (get style-map norm-style))
       (set-default-uri))))
 
 ;; TODO: make a 404 page

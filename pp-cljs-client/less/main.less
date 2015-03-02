@@ -102,6 +102,7 @@
 }
 .body-outer-7cb5e {
   background: #eee;
+  padding-bottom: 40px;
 }
 .body-inner-40af1 {
   margin: 0 auto;
@@ -137,6 +138,7 @@
 .big-select-51b29 {
   font-size: 18px;
   padding: 5px 10px;
+  margin-top: 8px;
 }
 .text-f3988 {
   height: 500px;
@@ -161,18 +163,16 @@
 }
 .btn-2d976 {
   background: @goldenShower;
-  border: 0;
+  border: 1px solid #eee;
   color: #fff;
   .font-normal(24px);
   padding: 8px 16px;
   .rounded(4px);
   width: 100%;
-}
-.footer-outer-5c647 {
-  background: #222;
-}
-.footer-inner-022c2 {
-  margin: 0 auto;
+
+  &:hover {
+    background: darken(@goldenShower, 5%);
+  }
 }
 .faqs-outer-dac3a {
   background: rgba(90, 131, 213, 0.75);
