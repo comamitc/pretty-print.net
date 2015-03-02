@@ -39,7 +39,6 @@
 
 (def github-url "https://github.com/comamitc/pretty-print.net")
 (def issues-url "https://github.com/comamitc/pretty-print.net/issues")
-(def mailing-list-url "http://groups.google.com/group/clojurescript")
 
 (quiescent/defcomponent footer-docs-list []
   (sablono/html
@@ -79,8 +78,8 @@
       [:li [:a.ftr-link-67c8e {:href issues-url}
         "Issues" [:i.fa.fa-external-link]]]]]))
 
-(def cljsinfo-license-url "https://github.com/oakmac/cljs.info/blob/master/LICENSE.md")
-(def clojurescript-license-url "https://github.com/clojure/clojurescript#license")
+(def pp-license-url
+  "https://github.com/comamitc/pretty-print.net/blob/master/LICENSE.md")
 
 (quiescent/defcomponent footer-bottom []
   (sablono/html
@@ -88,7 +87,7 @@
     [:div.left-1764b
       [:p.small-14fbc
         "pretty-print.net is released under the "
-        [:a {:href cljsinfo-license-url} "MIT License"] "."]]
+        [:a {:href pp-license-url} "MIT License"] "."]]
     [:div.right-e461e
       [:a.ftr-home-link-2c3b4 {:href (url "/")} "pretty-print"
         [:span.ftr-info-a5716 ".net"]]]

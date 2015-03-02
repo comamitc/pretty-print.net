@@ -3,13 +3,15 @@
     [ajax.core :refer [GET POST]]
     [pp-client.util :refer [js-log log]]))
 
-(defn- error-handler [{:keys [status status-text]}]
-  (if (= status 400)
-    (js-log (str "an parse error occured " status-text))
-    (js-log (str "some other error occured" status-text))))
+(defn- error-handler [response]
+  (if (= (:status response) 400)
 
-(def default-opts {;;:response-format :json
-                   :keywords? false
+    (let [resp (:response response)]
+      (js-log (str "an parse error occured " resp)))
+
+    (js-log (str "some other error occured " (:status-text response)))))
+
+(def default-opts {:keywords? false
                    :error-handler error-handler})
 
 (defn format-input [url payload handler]

@@ -31,7 +31,7 @@
        :body ((get typefn type-norm) input type-norm)}
       (catch Exception e
         (let [err-msg (.getMessage e)]
-          (throw e)
+          ;;(throw e)
           (log/error err-msg)
            {:status 400
             :headers {"Content-Type" "application/json"}
