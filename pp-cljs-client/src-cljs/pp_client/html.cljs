@@ -155,9 +155,9 @@
           [:span.err-ttl-0867b "FORMAT ERROR"]
             [:div.msg-6f5ee (:msg new-state)]
             (when (some? (:line new-state))
-              [:div.line-b55e8 (str "LINE: " (:line new-state))])
+              [:div.line-b55e8 (str "line: " (:line new-state))])
             (when (some? (:column new-state))
-              [:div.col-67be9 (str "COLUMN: " (:column new-state))])])]))
+              [:div.col-67be9 (str "column: " (:column new-state))])])]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
