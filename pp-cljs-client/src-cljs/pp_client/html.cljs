@@ -149,12 +149,14 @@
     [:div.right-body-caf9a
       [:button#formatBtn.btn-2d976 {:on-click #(on-btn-click %1)} "Format"]
       (when (:msg new-state )
-        [:div.error-disp-7c4aa 
+        [:div.error-disp-7c4aa
+          [:i.fa.fa-exclamation-circle.fa-2] 
+          [:span.pad-left-0867b "PARSE ERROR"]
           (when (some? (:line new-state))
             [:div.line-b55e8 (str "LINE: " (:line new-state))])
           (when (some? (:column new-state))
             [:div.col-67be9 (str "COLUMN: " (:column new-state))])
-            [:div.msg-6f5ee (str "ERROR: " (:msg new-state))]])]))
+            [:div.msg-6f5ee (:msg new-state)]])]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
