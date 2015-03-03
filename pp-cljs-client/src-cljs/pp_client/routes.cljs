@@ -14,7 +14,7 @@
                   :uri "/jvm/format/edn"}
                 "clj"
                  {:id "clj"
-                  :desc "Clojure"
+                  :desc "Clojure Code"
                   :uri "/jvm/format/clj"}})
 
 (defn- set-default-uri

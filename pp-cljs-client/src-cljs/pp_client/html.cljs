@@ -51,13 +51,10 @@
 (quiescent/defcomponent footer-docs-list []
   (sablono/html
   [:div.col-ace4b
-    ;;[:h5.hdr-856fa "Footer"]
     [:ul
       [:li [:a.ftr-link-67c8e {:href docs-url} "Docs"]]
-      [:li [:a.ftr-link-67c8e {:href github-url}
-        "GitHub" [:i.fa.fa-external-link]]]
-      [:li [:a.ftr-link-67c8e {:href issues-url}
-        "Issues" [:i.fa.fa-external-link]]]]]))
+      [:li [:a.ftr-link-67c8e {:href github-url} "GitHub"]]
+      [:li [:a.ftr-link-67c8e {:href issues-url} "Issues"]]]]))
 
 (quiescent/defcomponent footer-learn-list []
   (sablono/html
@@ -177,7 +174,7 @@
       (Header state)
       [:div.body-outer-7cb5e
             [:div.body-inner-40af1
-              [:h2.instructions-b15d3 (str "Paste " (:desc state) " below:")]
+              [:h2.instructions-b15d3 (str "Paste " (:desc state) ":")]
               (LeftBody state)
               (RightBody state) 
               [:div.clr-217e3]]]
