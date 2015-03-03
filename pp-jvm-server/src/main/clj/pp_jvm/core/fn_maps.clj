@@ -3,7 +3,8 @@
             [pp-jvm.format.web-pp :refer [format-json]]
             [pp-jvm.format.data-pp :refer [format-xml]]
             [pp-jvm.format.parse-error-handler :refer [parse-exception!]]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [cheshire.core :refer [generate-string]]))
 
 (defn- format-scala
   [input tipe]
@@ -27,12 +28,12 @@
   (let [type-norm (to-lower tipe)]
     (try
       {:status 200
-       :headers {"Content-Type" "text/plain"}
-       :body ((get typefn type-norm) input type-norm)}
+       :headers {"Content-Type" "application/json"}
+       :body (generate-string ((get typefn type-norm) input type-norm))}
       (catch Exception e
         (let [err-msg (.getMessage e)]
           ;;(throw e)
           (log/error err-msg)
            {:status 400
             :headers {"Content-Type" "application/json"}
-            :body (parse-exception! err-msg)})))))
+            :body (generate-string (parse-exception! err-msg))})))))

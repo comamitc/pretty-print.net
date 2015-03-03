@@ -8,7 +8,7 @@
 		  found (re-find matcher)]
     (if (some? found)
       (or (found 1) (found 2))
-      "")))
+      nil)))
 
 (defn- extract-line
 	[msg]
@@ -17,11 +17,8 @@
 		  found (re-find matcher)]
 	  (if (some? found)
       (or (found 1) (found 2))
-      "")))
+      nil)))
 
-(defn parse-exception!
+(defn parse-exception! 
   [msg]
-  (println msg)
-  (generate-string {:line (extract-line msg)
-  		              :column (extract-column msg)
-  		              :msg msg}))
+  {:line (extract-line msg) :column (extract-column msg) :msg msg})
