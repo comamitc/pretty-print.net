@@ -148,13 +148,13 @@
   (sablono/html
     [:div.right-body-caf9a
       [:button#formatBtn.btn-2d976 {:on-click #(on-btn-click %1)} "Format"]
-      [:div.error-disp-7c4aa 
-        (when (some? (:line new-state))
-          [:div.line-b55e8 (str "line: " (:line new-state))])
-        (when (some? (:column new-state))
-          [:div.col-67be9 (str "column: " (:column new-state))])
-        (when (some? (:msg new-state))
-          [:div.msg-6f5ee (str "error: " (:msg new-state))])]]))
+      (when (:msg new-state )
+        [:div.error-disp-7c4aa 
+          (when (some? (:line new-state))
+            [:div.line-b55e8 (str "LINE: " (:line new-state))])
+          (when (some? (:column new-state))
+            [:div.col-67be9 (str "COLUMN: " (:column new-state))])
+            [:div.msg-6f5ee (str "ERROR: " (:msg new-state))]])]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
