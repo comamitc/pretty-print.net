@@ -169,7 +169,6 @@
   padding: 8px 16px;
   .rounded(4px);
   width: 100%;
-
   &:hover {
     background: darken(@goldenShower, 5%);
   }
@@ -183,11 +182,17 @@
 .col-ace4b {
   .box-sizing();
   float: left;
-  width: 25%;
-  ul, li {
+  width: 100%;
+  text-align: center;
+  ul {
     list-style: none;
     margin: 0;
+    margin-top: 25px;
     padding: 0;
+    li {
+      display: inline-block;
+      width: 150px;
+    }
   }
 }
 .hdr-856fa {
@@ -212,13 +217,13 @@
   text-decoration: underline;
 }
 .bottom-31b43 {
-  padding: 40px 0;
+  padding: 20px 0 40px 0;
 }
 .small-14fbc {
   color: @footerBottomTextColor;
   font-size: 12px;
   margin: 0;
-  padding: 0 0 5px 0;
+  padding: 15px 0 5px 0;
   a {
     color: @cljLogoLightBlueHalf;
     text-decoration: none;
@@ -258,4 +263,12 @@
 }
 .right-e461e {
   float: right;
+}
+.error-disp-7c4aa {
+  margin-top: 20px;
+  color: red;
+  font-size: 12px;
+  > div {
+    padding: 7px;
+  }
 }

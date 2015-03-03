@@ -27,28 +27,36 @@
   ;;(js-log (str response))
   (swap! state assoc :value response))
 
+(defn- on-error [response]
+  (if (= (:status response) 400)
+    (let [resp (:response response)]
+      (swap! state conj resp))
+    (throw (:status-text response))))
+
 (defn- on-style-change [evt]
   (aset js/window "location" "hash" (str "/format/" (.-value (.-target evt)))))
 
 (defn- on-btn-click [evt]
   (let [input (:value @state)]
-    (format-input (:uri @state) input on-format)))
+    (format-input (:uri @state) input on-format on-error)))
 ;;------------------------------------------------------------------------------
 ;; Footer
 ;;------------------------------------------------------------------------------
 
 (def github-url "https://github.com/comamitc/pretty-print.net")
 (def issues-url "https://github.com/comamitc/pretty-print.net/issues")
+(def docs-url "https://github.com/comamitc/pretty-print.net/blob/master/README.md")
 
 (quiescent/defcomponent footer-docs-list []
   (sablono/html
   [:div.col-ace4b
-    [:h5.hdr-856fa "Documentation"]
+    ;;[:h5.hdr-856fa "Footer"]
     [:ul
-      [:li [:a.ftr-link-67c8e {:href (url "/getting-started")} "Getting Started"]]
-      [:li [:a.ftr-link-67c8e {:href (url "/tutorials")} "Tutorials"]]
-      [:li [:a.ftr-link-67c8e {:href (url "/docs")} "Docs"]]
-      [:li [:a.ftr-link-67c8e {:href (url "/cheatsheet")} "Cheatsheet"]]]]))
+      [:li [:a.ftr-link-67c8e {:href docs-url} "Docs"]]
+      [:li [:a.ftr-link-67c8e {:href github-url}
+        "GitHub" [:i.fa.fa-external-link]]]
+      [:li [:a.ftr-link-67c8e {:href issues-url}
+        "Issues" [:i.fa.fa-external-link]]]]]))
 
 (quiescent/defcomponent footer-learn-list []
   (sablono/html
@@ -98,9 +106,9 @@
   [:div.ftr-outer-6bcd3
     [:div.ftr-inner-557c9
       (footer-docs-list)
-      (footer-learn-list)
-      (footer-community-list)
-      (footer-contribute-list)
+      ;;(footer-learn-list)
+      ;;(footer-community-list)
+      ;;(footer-contribute-list)
       [:div.clr-43e49]
       (footer-bottom)]]))
 
@@ -136,10 +144,17 @@
 ;; Body
 ;;------------------------------------------------------------------------------
 
-(quiescent/defcomponent RightBody []
+(quiescent/defcomponent RightBody [new-state]
   (sablono/html
     [:div.right-body-caf9a
-      [:button#formatBtn.btn-2d976 {:on-click #(on-btn-click %1)} "Format"]]))
+      [:button#formatBtn.btn-2d976 {:on-click #(on-btn-click %1)} "Format"]
+      [:div.error-disp-7c4aa 
+        (when (some? (:line new-state))
+          [:div.line-b55e8 (str "line: " (:line new-state))])
+        (when (some? (:column new-state))
+          [:div.col-67be9 (str "column: " (:column new-state))])
+        (when (some? (:msg new-state))
+          [:div.msg-6f5ee (str "error: " (:msg new-state))])]]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
@@ -161,7 +176,7 @@
             [:div.body-inner-40af1
               [:h2.instructions-b15d3 (str "Paste " (:desc state) " below:")]
               (LeftBody state)
-              (RightBody)
+              (RightBody state) 
               [:div.clr-217e3]]]
       (footer)]))
 
