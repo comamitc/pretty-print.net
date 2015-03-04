@@ -18,8 +18,9 @@
                   :uri "/jvm/format/clj"}})
 
 (defn- set-default-uri
-  []
-  (js-log "found invalid style")
+  [style]
+  (js-log "found invalid style ")
+  (js-log style)
   (aset js/window "location" "hash" "/format/edn"))
 
 (defroute "/format/:style" [style]
@@ -27,11 +28,11 @@
         valid-style? (contains? style-map norm-style)]
     (if valid-style?
       (html/init! (get style-map norm-style))
-      (set-default-uri))))
+      (set-default-uri norm-style))))
 
 ;; TODO: make a 404 page
 (defroute "*" []
-  (set-default-uri))
+  (set-default-uri ""))
 
 ;; listen to the hashchange event
 (defn init []

@@ -116,8 +116,8 @@
 
 (quiescent/defcomponent InputOptions [new-state]
   (sablono/html
-    [:select#inputSelect.big-select-51b29 {:value (:id new-state)}
-      {:on-change #(on-style-change %1)}
+    [:select#inputSelect.big-select-51b29
+      {:on-change #(on-style-change %1) :value (:id new-state)}
       [:optgroup {:label "Clojure"}
         [:option {:value "clj"} "Clojure Code"]
         [:option {:value "edn"} "EDN"]
