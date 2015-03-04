@@ -168,7 +168,9 @@
     [:div.left-body-ca07e
       [:textarea#mainTextarea.text-f3988
         {:value (:value new-state)
-         :on-change #(swap! state assoc :value (-> % .-target .-value))}]]))
+         :on-change #(swap! state assoc :value (-> % .-target .-value) 
+                                        :success? false 
+                                        :error? false)}]]))
 
 (quiescent/defcomponent Footer []
   (sablono/html
