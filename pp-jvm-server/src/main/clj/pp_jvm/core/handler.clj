@@ -17,7 +17,8 @@
     (log/debug request)
     (let [tipe (:tipe (:params request))
           input (:input (decode-body! request))]
-      (log/debug "Formating to type " tipe " for input " input)
+      (log/info "Formating to type " tipe)
+      (log/debug "input: " input)
       (mapfn input tipe)))
   (route/not-found "Not Found"))
 

@@ -1,4 +1,4 @@
-(defproject pp-jvm-server "0.1.0-SNAPSHOT"
+(defproject pp-jvm-server "0.1.0"
   :description "pretty-printer server side for pretty-print.net"
   :url "http://pretty-print.net"
   :min-lein-version "2.0.0"
