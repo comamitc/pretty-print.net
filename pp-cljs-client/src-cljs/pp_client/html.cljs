@@ -114,9 +114,9 @@
 ;; Header
 ;;------------------------------------------------------------------------------
 
-(quiescent/defcomponent InputOptions [state]
+(quiescent/defcomponent InputOptions [new-state]
   (sablono/html
-    [:select#inputSelect.big-select-51b29
+    [:select#inputSelect.big-select-51b29 {:value (:id new-state)}
       {:on-change #(on-style-change %1)}
       [:optgroup {:label "Clojure"}
         [:option {:value "clj"} "Clojure Code"]
