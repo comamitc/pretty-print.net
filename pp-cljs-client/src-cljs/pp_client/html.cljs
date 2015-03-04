@@ -1,8 +1,6 @@
 (ns pp-client.html
-  (:require-macros [hiccups.core :as hiccups])
   (:require
-    hiccups.runtime
-    [pp-client.dom :refer [by-id]]
+    [pp-client.dom :refer [by-id set-body!]]
     [pp-client.util :refer [js-log log]]
     [quiescent :include-macros true]
     [sablono.core :as sablono :include-macros true]
@@ -46,9 +44,9 @@
 
 (def github-url "https://github.com/comamitc/pretty-print.net")
 (def issues-url "https://github.com/comamitc/pretty-print.net/issues")
-(def docs-url "https://github.com/comamitc/pretty-print.net/blob/master/README.md")
+(def docs-url "#/about")
 
-(quiescent/defcomponent footer-docs-list []
+(defn footer-docs-list []
   (sablono/html
   [:div.col-ace4b
     [:ul
@@ -87,7 +85,7 @@
 (def pp-license-url
   "https://github.com/comamitc/pretty-print.net/blob/master/LICENSE.md")
 
-(quiescent/defcomponent footer-bottom []
+(defn footer-bottom []
   (sablono/html
   [:div.bottom-31b43
     [:div.left-1764b
@@ -99,7 +97,7 @@
         [:span.ftr-info-a5716 ".net"]]]
     [:div.clr-43e49]]))
 
-(quiescent/defcomponent footer []
+(defn footer []
   (sablono/html
   [:div.ftr-outer-6bcd3
     [:div.ftr-inner-557c9
@@ -116,8 +114,8 @@
 
 (quiescent/defcomponent InputOptions [new-state]
   (sablono/html
-    [:select#inputSelect.big-select-51b29 {:value (:id new-state)}
-      {:on-change #(on-style-change %1)}
+    [:select#inputSelect.big-select-51b29
+      {:on-change #(on-style-change %1) :value (:id new-state)}
       [:optgroup {:label "Clojure"}
         [:option {:value "clj"} "Clojure Code"]
         [:option {:value "edn"} "EDN"]
@@ -136,6 +134,16 @@
             [:span.net-84e9a ".net"]]]
         [:div.right-1dd94
           (InputOptions state)]
+        [:div.clr-217e3]]]))
+
+(defn HeaderNoState []
+  (sablono/html
+    [:header.header-outer-c5e7d
+      [:div.header-inner-0f889
+        [:div.left-9467a
+          [:a.home-link-e4c1e {:href ""}
+            "pretty-print"
+            [:span.net-84e9a ".net"]]]
         [:div.clr-217e3]]]))
 
 ;;------------------------------------------------------------------------------
@@ -177,7 +185,7 @@
     [:footer.ftr-outer-6bcd3
       (footer)]))
 
-(quiescent/defcomponent Body [state]
+(quiescent/defcomponent MainPage [state]
   (sablono/html
     [:div#pageWrapper
       (Header state)
@@ -187,6 +195,31 @@
               (LeftBody state)
               (RightBody state) 
               [:div.clr-217e3]]]
+      (footer)]))
+
+(defn AboutPage []
+  (sablono/html
+    [:div#pageWrapper
+      (HeaderNoState)
+      [:div.body-outer-7cb5e
+        [:div.body-inner-5a8ac
+          [:h2.instructions-b15d3 "Rationale"]
+          [:p.text-block-d714f
+          (str "EDN is a powerful data interchange format commonly used with " 
+            "Clojure  and ClojureScript programs. It also doubles as a literal " 
+            "representation of most Clojure data structures, which are often " 
+            "printed to a REPL or console environment for debugging purposes. ")]
+          [:p.text-block-d714f
+            (str "Clojure core comes with clojure.pprint - which is a library to " 
+            "format Clojure code (and thus EDN) in a human-readable fashion. ")]
+          [:p.text-block-d714f
+            (str "As of January 2015, there are numerous online services to pretty " 
+            "print various data interchange formats (JSON, YAML, XML, etc), " 
+            "but there is no online service for printing an EDN string.")]
+          [:p.text-block-d714f 
+            (str "This project aims to build such a service and improve the "
+            "usability of working with EDN data.")]
+        [:div.clr-217e3]]]
       (footer)]))
 
 ;;------------------------------------------------------------------------------
@@ -205,7 +238,7 @@
     (set! anim-frame-id nil))
 
   ;; put the render function on the next animation frame
-  (let [render-fn #(quiescent/render (Body new-state) (by-id "bodyWrapper"))]
+  (let [render-fn #(quiescent/render (MainPage new-state) (by-id "bodyWrapper"))]
     (set! anim-frame-id (request-anim-frame render-fn))))
 
 (add-watch state :main on-change-state)
@@ -213,7 +246,7 @@
 ;;------------------------------------------------------------------------------
 ;; init
 ;;------------------------------------------------------------------------------
+(defn init! [style] (swap! state conj style))
 
-(defn init! [style]
-  (swap! state conj style))
+(defn about-init! [] (quiescent/render (AboutPage) (by-id "bodyWrapper")))
 
