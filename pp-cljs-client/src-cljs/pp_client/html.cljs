@@ -44,7 +44,7 @@
 
 (def github-url "https://github.com/comamitc/pretty-print.net")
 (def issues-url "https://github.com/comamitc/pretty-print.net/issues")
-(def docs-url "#/about")
+(def docs-url "http://pretty-print.net/#/about")
 
 (defn footer-docs-list []
   (sablono/html
