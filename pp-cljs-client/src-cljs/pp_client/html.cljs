@@ -52,7 +52,7 @@
   (sablono/html
   [:div.col-ace4b
     [:ul
-      [:li [:a.ftr-link-67c8e {:href docs-url} "Contribute"]]
+      [:li [:a.ftr-link-67c8e {:href docs-url} "Rationale"]]
       [:li [:a.ftr-link-67c8e {:href github-url} "GitHub"]]
       [:li [:a.ftr-link-67c8e {:href issues-url} "Issues"]]]]))
 
