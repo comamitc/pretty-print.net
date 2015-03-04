@@ -9,7 +9,7 @@
     [secretary.core :as secretary]
     [pp-client.data :refer [format-input]]))
 
-(def state (atom {}))
+(def state (atom {:success? false :error? false :value ""}))
 
 ;;------------------------------------------------------------------------------
 ;; URLs
@@ -25,12 +25,12 @@
 ;;------------------------------------------------------------------------------
 (defn- on-format [response]
   ;;(js-log (str response))
-  (swap! state assoc :value response))
+  (swap! state assoc :value response :success? true :error? false))
 
 (defn- on-error [response]
   (if (= (:status response) 400)
     (let [resp (:response response)]
-      (swap! state conj resp))
+      (swap! state conj resp {:success? false :error? true}))
     (throw (:status-text response))))
 
 (defn- on-style-change [evt]
@@ -145,16 +145,23 @@
 (quiescent/defcomponent RightBody [new-state]
   (sablono/html
     [:div.right-body-caf9a
-      [:button#formatBtn.btn-2d976 {:on-click #(on-btn-click %1)} "Format"]
-      (when (:msg new-state )
+      [:button#formatBtn.btn-2d976 
+        {:on-click #(on-btn-click %1) 
+         :disabled (if (empty? (:value new-state)) true false)} 
+          "Format"]
+      (when (:error? new-state)
         [:div.error-disp-7c4aa
-          [:i.fa.fa-exclamation-circle.fa-2] 
-          [:span.err-ttl-0867b "FORMAT ERROR"]
+          [:i.fa.fa-times-circle.fa-2] 
+          [:span.err-ttl-0867b "Format Error"]
             [:div.msg-6f5ee (:msg new-state)]
             (when (some? (:line new-state))
-              [:div.line-b55e8 (str "line: " (:line new-state))])
+              [:div.line-b55e8 (str "@line: " (:line new-state))
             (when (some? (:column new-state))
-              [:div.col-67be9 (str "column: " (:column new-state))])])]))
+              (str "; column: " (:column new-state)))])])
+      (when (:success? new-state)
+        [:div.success-disp-3a51b
+          [:i.fa.fa-check-circle.fa-2]
+          [:span.success-ttl-390ee "Success"]])]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
@@ -206,5 +213,5 @@
 ;;------------------------------------------------------------------------------
 
 (defn init! [style]
-  (reset! state (assoc style :value "")))
+  (swap! state conj style))
 
