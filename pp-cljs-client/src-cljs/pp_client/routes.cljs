@@ -30,6 +30,8 @@
       (html/init! (get style-map norm-style))
       (set-default-uri norm-style))))
 
+(defroute "/about" [] (html/about-init!))
+
 ;; TODO: make a 404 page
 (defroute "*" []
   (set-default-uri ""))

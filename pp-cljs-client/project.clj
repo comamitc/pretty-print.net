@@ -10,8 +10,7 @@
     [cljs-ajax "0.3.10"]
     [sablono "0.3.4"]
     [secretary "1.2.1"]
-    [quiescent "0.1.4"]
-    [hiccups "0.3.0"]]
+    [quiescent "0.1.4"]]
 
   :plugins [[lein-cljsbuild "1.0.4"]]
 

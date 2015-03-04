@@ -16,6 +16,9 @@
 (defn get-value [id]
   (aget (by-id id) "value"))
 
+(defn set-body! [html]
+  (aset (.-body js/document) "innerHTML" html))
+
 (defn set-html! [id html]
   (aset (by-id id) "innerHTML" html))
 
