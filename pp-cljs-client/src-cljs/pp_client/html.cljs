@@ -21,8 +21,9 @@
 ;;------------------------------------------------------------------------------
 ;; Event triggers
 ;;------------------------------------------------------------------------------
+
+;; TODO: need to format "settings" properly before sending to server
 (defn- on-format [response]
-  ;;(js-log (str response))
   (swap! state assoc :value response :success? true :error? false))
 
 (defn- on-error [response]
