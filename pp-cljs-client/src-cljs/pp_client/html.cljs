@@ -154,21 +154,24 @@
   (sablono/html
     [:div.settings-wrapper-751dc
       [:div.settings-hdr-fa6ca "Settings"]
-      (map 
-        (fn [[k v]] 
+      (map
+        (fn [[k v]]
           [:div.setting-e0ddb
-            [:input (assoc v :on-change #(swap! (get-in @state [:settings k]) assoc :value (-> % .-target .-value)))]]) settings)]))
+            [:input (assoc v :on-change #(swap! state
+                                                assoc-in [:settings k :value]
+                                                (-> % .-target .-value)))]])
+        settings)]))
 
 (quiescent/defcomponent FormatAction [new-state]
   (sablono/html
     [:div
-      [:button#formatBtn.btn-2d976 
-          {:on-click #(on-btn-click %1) 
-           :disabled (if (empty? (:value new-state)) true false)} 
+      [:button#formatBtn.btn-2d976
+          {:on-click #(on-btn-click %1)
+           :disabled (if (empty? (:value new-state)) true false)}
             "Format"]
         (when (:error? new-state)
           [:div.error-disp-7c4aa
-            [:i.fa.fa-times-circle.fa-2] 
+            [:i.fa.fa-times-circle.fa-2]
             [:span.err-ttl-0867b "Format Error"]
               [:div.msg-6f5ee (:msg new-state)]
               (when (some? (:line new-state))
@@ -191,8 +194,8 @@
     [:div.left-body-ca07e
       [:textarea#mainTextarea.text-f3988
         {:value (:value new-state)
-         :on-change #(swap! state assoc :value (-> % .-target .-value) 
-                                        :success? false 
+         :on-change #(swap! state assoc :value (-> % .-target .-value)
+                                        :success? false
                                         :error? false)}]]))
 
 (quiescent/defcomponent Footer []
@@ -208,7 +211,7 @@
             [:div.body-inner-40af1
               [:h2.instructions-b15d3 (str "Paste " (:desc state) ":")]
               (LeftBody state)
-              (RightBody state) 
+              (RightBody state)
               [:div.clr-217e3]]]
       (footer)]))
 
@@ -220,18 +223,18 @@
         [:div.body-inner-5a8ac
           [:h2.instructions-b15d3 "Rationale"]
           [:p.text-block-d714f
-          (str "EDN is a powerful data interchange format commonly used with " 
-            "Clojure  and ClojureScript programs. It also doubles as a literal " 
-            "representation of most Clojure data structures, which are often " 
+          (str "EDN is a powerful data interchange format commonly used with "
+            "Clojure  and ClojureScript programs. It also doubles as a literal "
+            "representation of most Clojure data structures, which are often "
             "printed to a REPL or console environment for debugging purposes. ")]
           [:p.text-block-d714f
-            (str "Clojure core comes with clojure.pprint - which is a library to " 
+            (str "Clojure core comes with clojure.pprint - which is a library to "
             "format Clojure code (and thus EDN) in a human-readable fashion. ")]
           [:p.text-block-d714f
-            (str "As of January 2015, there are numerous online services to pretty " 
-            "print various data interchange formats (JSON, YAML, XML, etc), " 
+            (str "As of January 2015, there are numerous online services to pretty "
+            "print various data interchange formats (JSON, YAML, XML, etc), "
             "but there is no online service for printing an EDN string.")]
-          [:p.text-block-d714f 
+          [:p.text-block-d714f
             (str "This project aims to build such a service and improve the "
             "usability of working with EDN data.")]
         [:div.clr-217e3]]]
