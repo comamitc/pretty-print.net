@@ -3,7 +3,7 @@
 ;; http://nakkaya.com/2010/03/27/pretty-printing-xml-with-clojure/
 (defn format-xml
   "Takes a valid input xml input and pretty prints using standard java APIs"
-  [input tipe]
+  [input tipe settings]
   (let [in (javax.xml.transform.stream.StreamSource.
             (java.io.StringReader. input))
         writer (java.io.StringWriter.)

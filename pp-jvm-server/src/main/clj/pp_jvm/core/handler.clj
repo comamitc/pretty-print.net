@@ -16,7 +16,9 @@
   (POST "/jvm/format/:tipe" request
     (log/debug request)
     (let [tipe (:tipe (:params request))
-          input (:input (decode-body! request))]
+          body (decode-body! request)
+          input (:input body)
+          settings (:settings body)]
       (log/info "Formating to type " tipe)
       (log/debug "input: " input)
       (mapfn input tipe)))

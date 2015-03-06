@@ -3,7 +3,7 @@
 
 (defn format-json
   "Takes valid JSON data and formats it using cheshire.core/generate-string"
-  [input tipe]
+  [input tipe settings]
   ;; TODO: doesn't seem very efficient since the JSON is already in str form
   (generate-string (parse-string input true)
                    {:pretty true}))

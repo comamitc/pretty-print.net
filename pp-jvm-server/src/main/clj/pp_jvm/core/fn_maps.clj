@@ -6,9 +6,11 @@
             [clojure.tools.logging :as log]
             [cheshire.core :refer [generate-string]]))
 
+;; TODO we don't use settings
+;; TODO we don't use tipe
 (defn- format-scala
-  [input tipe]
-  (ppjvm.format.ScalaFormat/formatScala input tipe))
+  [input tipe settings] 
+  (ppjvm.format.ScalaFormat/formatScala input))
 
 (def typefn
   {"clj"      format-clj
@@ -24,12 +26,14 @@
 (defn mapfn
   "Retrieves a function from the typefn map to execute formatting. Function
   signature must be `[input format-type]`."
-  [input tipe]
+  [input tipe settings]
   (let [type-norm (to-lower tipe)]
     (try
       {:status 200
        :headers {"Content-Type" "application/json"}
-       :body (generate-string ((get typefn type-norm) input type-norm))}
+       :body (generate-string ((get typefn type-norm) input 
+                                                      type-norm 
+                                                      settings))}
       (catch Exception e
         (let [err-msg (.getMessage e)]
           (log/error err-msg)
