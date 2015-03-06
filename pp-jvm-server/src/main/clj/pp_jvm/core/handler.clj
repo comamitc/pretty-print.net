@@ -21,7 +21,7 @@
           settings (:settings body)]
       (log/info "Formating to type " tipe)
       (log/debug "input: " input)
-      (mapfn input tipe)))
+      (mapfn input tipe settings)))
   (route/not-found "Not Found"))
 
 (run-jetty (wrap-refresh app-routes) {:port (:jvm-server-port config)})
