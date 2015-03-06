@@ -35,8 +35,7 @@
   (aset js/window "location" "hash" (str "/format/" (.-value (.-target evt)))))
 
 (defn- on-btn-click [evt]
-  (let [input (:value @state)]
-    (format-input (:uri @state) input on-format on-error)))
+    (format-input state on-format on-error))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
@@ -150,26 +149,42 @@
 ;; Body
 ;;------------------------------------------------------------------------------
 
+
+(quiescent/defcomponent SettingsAction [settings]
+  (sablono/html
+    [:div.settings-wrapper-751dc
+      [:div.settings-hdr-fa6ca "Settings"]
+      (map 
+        (fn [[k v]] 
+          [:div.setting-e0ddb
+            [:input (assoc v :on-change #(swap! (get-in @state [:settings k]) assoc :value (-> % .-target .-value)))]]) settings)]))
+
+(quiescent/defcomponent FormatAction [new-state]
+  (sablono/html
+    [:div
+      [:button#formatBtn.btn-2d976 
+          {:on-click #(on-btn-click %1) 
+           :disabled (if (empty? (:value new-state)) true false)} 
+            "Format"]
+        (when (:error? new-state)
+          [:div.error-disp-7c4aa
+            [:i.fa.fa-times-circle.fa-2] 
+            [:span.err-ttl-0867b "Format Error"]
+              [:div.msg-6f5ee (:msg new-state)]
+              (when (some? (:line new-state))
+                [:div.line-b55e8 (str "@line: " (:line new-state))
+              (when (some? (:column new-state))
+                (str "; column: " (:column new-state)))])])
+        (when (:success? new-state)
+          [:div.success-disp-3a51b
+            [:i.fa.fa-check-circle.fa-2]
+            [:span.success-ttl-390ee "Success"]])]))
+
 (quiescent/defcomponent RightBody [new-state]
   (sablono/html
     [:div.right-body-caf9a
-      [:button#formatBtn.btn-2d976 
-        {:on-click #(on-btn-click %1) 
-         :disabled (if (empty? (:value new-state)) true false)} 
-          "Format"]
-      (when (:error? new-state)
-        [:div.error-disp-7c4aa
-          [:i.fa.fa-times-circle.fa-2] 
-          [:span.err-ttl-0867b "Format Error"]
-            [:div.msg-6f5ee (:msg new-state)]
-            (when (some? (:line new-state))
-              [:div.line-b55e8 (str "@line: " (:line new-state))
-            (when (some? (:column new-state))
-              (str "; column: " (:column new-state)))])])
-      (when (:success? new-state)
-        [:div.success-disp-3a51b
-          [:i.fa.fa-check-circle.fa-2]
-          [:span.success-ttl-390ee "Success"]])]))
+      (SettingsAction (:settings new-state))
+      (FormatAction new-state)]))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
