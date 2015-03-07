@@ -21,6 +21,7 @@
           settings (:settings body)]
       (log/info "Formating to type " tipe)
       (log/debug "input: " input)
+      (log/debug "settings: " settings)
       (mapfn input tipe settings)))
   (route/not-found "Not Found"))
 

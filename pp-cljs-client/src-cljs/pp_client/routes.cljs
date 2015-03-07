@@ -2,28 +2,13 @@
   (:require
       [goog.events :as events]
       [goog.history.EventType :as EventType]
-      [pp-client.html :as html]
       [secretary.core :as secretary :refer-macros [defroute]]
-      [pp-client.util :refer [js-log log]])
+      [pp-client.html :as html]
+      [pp-client.util :refer [js-log log]]
+      [pp-client.config :refer [style-map]])
   (:import goog.History))
 
 (secretary/set-config! :prefix "#")
-(def style-map {"edn"
-                 {:id "edn"
-                  :desc "EDN"
-                  :uri "/jvm/format/edn"
-                  :settings {:right-margin 
-                              {:type "range"
-                               :id "right-margin"
-                               :name "Right Margin" 
-                               :min 20 
-                               :max 120
-                               :step 5
-                               :value 40}}}
-                "clj"
-                 {:id "clj"
-                  :desc "Clojure Code"
-                  :uri "/jvm/format/clj"}})
 
 (defn- set-default-uri
   [style]

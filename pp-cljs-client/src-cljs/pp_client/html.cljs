@@ -10,13 +10,19 @@
 (def state (atom {:success? false :error? false :value ""}))
 
 ;;------------------------------------------------------------------------------
-;; URLs
+;; Helpers
 ;;------------------------------------------------------------------------------
 
 (defn- url [path] path)
   ;;(if-let [base-href (:base-href config)]
     ;;(str (replace base-href #"/$" "") path)
     ;;path))
+
+(defn- normalize-settings [curr-state]
+  (let [settings (:settings curr-state)
+        y (into {} (for [[k v] settings] [k (:value v)]))]
+    (println y)
+    (assoc-in curr-state [:settings] y)))
 
 ;;------------------------------------------------------------------------------
 ;; Event triggers
@@ -37,8 +43,9 @@
   (aset js/window "location" "hash" (str "/format/" (-> evt .-target .-value))))
 
 (defn- on-btn-click [evt]
-    (format-input state on-format on-error))
+    (format-input (normalize-settings @state) on-format on-error))
 
+;; TODO: clear :success / :error message on settings change
 (defn- on-range-change [k]
   (fn [evt]
     (swap! state assoc-in [:settings k :value] (-> evt .-target .-value))))
@@ -167,7 +174,6 @@
                 [:div
                   [:input.range-input-0b991 
                     (assoc v :on-change (on-range-change k))]]]) settings)]))
-                
 
 (quiescent/defcomponent FormatAction [new-state]
   (sablono/html
@@ -192,9 +198,10 @@
 
 (quiescent/defcomponent RightBody [new-state]
   (sablono/html
-    [:div.right-body-caf9a
-      (SettingsAction (:settings new-state))
-      (FormatAction new-state)]))
+    (let [settings (:settings new-state)]
+      [:div.right-body-caf9a
+        (when (not (empty? settings)) (SettingsAction settings))
+        (FormatAction new-state)])))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
