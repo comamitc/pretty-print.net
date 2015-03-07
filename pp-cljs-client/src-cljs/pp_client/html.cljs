@@ -20,9 +20,9 @@
 
 (defn- normalize-settings [curr-state]
   (let [settings (:settings curr-state)
-        y (into {} (for [[k v] settings] [k (:value v)]))]
-    (println y)
-    (assoc-in curr-state [:settings] y)))
+        y (into {} (for [[k v] settings] [k (or (:value v) (:checked v))]))
+        new-sets (assoc-in curr-state [:settings] y)]
+    new-sets))
 
 ;;------------------------------------------------------------------------------
 ;; Event triggers
@@ -43,12 +43,30 @@
   (aset js/window "location" "hash" (str "/format/" (-> evt .-target .-value))))
 
 (defn- on-btn-click [evt]
-    (format-input (normalize-settings @state) on-format on-error))
+  (log @state)
+  (format-input (normalize-settings @state) on-format on-error))
+
+(defn- reset-state! [new-state]
+  (reset! state (assoc new-state :success? false :error? false)))
 
 ;; TODO: clear :success / :error message on settings change
-(defn- on-range-change [k]
+(defn- on-range-change [k evt new-state]
+  (reset-state! (assoc-in new-state [:settings k :value] 
+                                    (int (-> evt .-target .-value)))))
+
+(defn- on-checkbox-change [k evt new-state]
+  (reset-state! (assoc-in new-state 
+                          [:settings k :checked] 
+                          (false? (get-in new-state 
+                                          [:settings k :checked] 
+                                          false)))))
+
+(def event-map {"range"    on-range-change
+                "checkbox" on-checkbox-change})
+
+(defn- on-change-evt [k]
   (fn [evt]
-    (swap! state assoc-in [:settings k :value] (-> evt .-target .-value))))
+    ((get event-map (-> evt .-target .-type)) k evt @state)))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
@@ -170,10 +188,11 @@
       (map (fn [[k v]]
               [:div.setting-e0ddb
                 [:div.setting-label-abd34 
-                  (str (:name v) ": ") [:span.set-value-06ba3 (:value v) ]]
+                  (str (:name v) " ") [:span.set-value-06ba3 (:value v) ]]
                 [:div
-                  [:input.range-input-0b991 
-                    (assoc v :on-change (on-range-change k))]]]) settings)]))
+                  [:input
+                    (assoc v :on-change (on-change-evt k))]
+                  [:label.label-f831f {:for (:id v)}]]]) settings)]))
 
 (quiescent/defcomponent FormatAction [new-state]
   (sablono/html

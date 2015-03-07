@@ -36,7 +36,7 @@
                                                       settings))}
       (catch Exception e
         (let [err-msg (.getMessage e)]
-          (log/error err-msg)
+          (log/error e)
            {:status 400
             :headers {"Content-Type" "application/json"}
             :body (generate-string (parse-exception! err-msg))})))))

@@ -343,7 +343,8 @@ body {
 }
 .setting-label-abd34 {
   .font-light(16px);
-  margin-left: 9%
+  margin-left: 9%;
+  display: inline;
 }
 
 .range-input-0b991 {
@@ -389,7 +390,7 @@ input[type=range]::-ms-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: @roundColor;
+    background: @goldenShower;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
@@ -415,7 +416,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: @roundColor;
+    background: @goldenShower;
     margin-top: -4px;
 }
 
@@ -453,11 +454,68 @@ input[type=range]::-ms-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: @roundColor;
+    background: @goldenShower;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
 }
 input[type=range]:focus::-ms-fill-upper {
     background: #ccc;
+}
+.cmn-toggle {
+  display: inline-block;
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+.cmn-toggle + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+input.cmn-toggle-round-flat + label {
+  padding: 2px;
+  width: 60px;
+  height: 30px;
+  background-color: #dddddd;
+  border-radius: 30px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round-flat + label:before,
+input.cmn-toggle-round-flat + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+input.cmn-toggle-round-flat + label:before {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background-color: #fff;
+  border-radius: 30px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round-flat + label:after {
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 26px;
+  background-color: #dddddd;
+  border-radius: 52px;
+  transition: margin 0.4s, background 0.4s;
+}
+input.cmn-toggle-round-flat:checked + label {
+  background-color: @goldenShower;
+}
+input.cmn-toggle-round-flat:checked + label:after {
+  margin-left: 30px;
+  background-color: @goldenShower;
+}
+.label-f831f {
+  margin-left: 70%;
+  margin-top: -28px;
 }
