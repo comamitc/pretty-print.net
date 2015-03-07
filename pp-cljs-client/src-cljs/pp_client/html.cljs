@@ -49,24 +49,21 @@
 (defn- reset-state! [new-state]
   (reset! state (assoc new-state :success? false :error? false)))
 
-;; TODO: clear :success / :error message on settings change
 (defn- on-range-change [k evt new-state]
-  (reset-state! (assoc-in new-state [:settings k :value] 
-                                    (int (-> evt .-target .-value)))))
+  (reset-state!
+    (assoc-in new-state [:settings k :value] (int (-> evt .-target .-value)))))
 
 (defn- on-checkbox-change [k evt new-state]
-  (reset-state! (assoc-in new-state 
-                          [:settings k :checked] 
-                          (false? (get-in new-state 
-                                          [:settings k :checked] 
-                                          false)))))
+  (reset-state!
+    (assoc-in
+      new-state
+      [:settings k :checked]
+      (false? (get-in new-state [:settings k :checked] false)))))
 
-(def event-map {"range"    on-range-change
-                "checkbox" on-checkbox-change})
+(def event-map {"range" on-range-change, "checkbox" on-checkbox-change})
 
 (defn- on-change-evt [k]
-  (fn [evt]
-    ((get event-map (-> evt .-target .-type)) k evt @state)))
+  (fn [evt] ((get event-map (-> evt .-target .-type)) k evt @state)))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
