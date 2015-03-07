@@ -30,13 +30,18 @@
   (if (= (:status response) 400)
     (let [resp (:response response)]
       (swap! state conj resp {:success? false :error? true}))
+    ;; unknown server error
     (throw (:status-text response))))
 
 (defn- on-style-change [evt]
-  (aset js/window "location" "hash" (str "/format/" (.-value (.-target evt)))))
+  (aset js/window "location" "hash" (str "/format/" (-> evt .-target .-value))))
 
 (defn- on-btn-click [evt]
     (format-input state on-format on-error))
+
+(defn- on-range-change [k]
+  (fn [evt]
+    (swap! state assoc-in [:settings k :value] (-> evt .-target .-value))))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
@@ -155,17 +160,18 @@
   (sablono/html
     [:div.settings-wrapper-751dc
       [:div.settings-hdr-fa6ca "Settings"]
-      (map
-        (fn [[k v]]
-          [:div.setting-e0ddb
-            [:input (assoc v :on-change #(swap! state
-                                                assoc-in [:settings k :value]
-                                                (-> % .-target .-value)))]])
-        settings)]))
+      (map (fn [[k v]]
+              [:div.setting-e0ddb
+                [:div.setting-label-abd34 
+                  (str (:name v) ": ") [:span.set-value-06ba3 (:value v) ]]
+                [:div
+                  [:input.range-input-0b991 
+                    (assoc v :on-change (on-range-change k))]]]) settings)]))
+                
 
 (quiescent/defcomponent FormatAction [new-state]
   (sablono/html
-    [:div
+    [:div.format-action-7ac2a
       [:button#formatBtn.btn-2d976
           {:on-click #(on-btn-click %1)
            :disabled (if (empty? (:value new-state)) true false)}
