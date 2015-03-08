@@ -2,20 +2,13 @@
   (:require
       [goog.events :as events]
       [goog.history.EventType :as EventType]
-      [pp-client.html :as html]
       [secretary.core :as secretary :refer-macros [defroute]]
-      [pp-client.util :refer [js-log log]])
+      [pp-client.html :as html]
+      [pp-client.util :refer [js-log log]]
+      [pp-client.config :refer [style-map]])
   (:import goog.History))
 
 (secretary/set-config! :prefix "#")
-(def style-map {"edn"
-                 {:id "edn"
-                  :desc "EDN"
-                  :uri "/jvm/format/edn"}
-                "clj"
-                 {:id "clj"
-                  :desc "Clojure Code"
-                  :uri "/jvm/format/clj"}})
 
 (defn- set-default-uri
   [style]
@@ -29,6 +22,8 @@
     (if valid-style?
       (html/init! (get style-map norm-style))
       (set-default-uri norm-style))))
+
+(defroute "/about" [] (html/about-init!))
 
 ;; TODO: make a 404 page
 (defroute "*" []

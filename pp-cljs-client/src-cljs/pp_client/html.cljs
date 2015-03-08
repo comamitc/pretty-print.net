@@ -1,8 +1,6 @@
 (ns pp-client.html
-  (:require-macros [hiccups.core :as hiccups])
   (:require
-    hiccups.runtime
-    [pp-client.dom :refer [by-id]]
+    [pp-client.dom :refer [by-id set-body!]]
     [pp-client.util :refer [js-log log]]
     [quiescent :include-macros true]
     [sablono.core :as sablono :include-macros true]
@@ -12,7 +10,7 @@
 (def state (atom {:success? false :error? false :value ""}))
 
 ;;------------------------------------------------------------------------------
-;; URLs
+;; Helpers
 ;;------------------------------------------------------------------------------
 
 (defn- url [path] path)
@@ -20,25 +18,52 @@
     ;;(str (replace base-href #"/$" "") path)
     ;;path))
 
+(defn- normalize-settings [curr-state]
+  (let [settings (:settings curr-state)
+        y (into {} (for [[k v] settings] [k (or (:value v) (:checked v))]))
+        new-sets (assoc-in curr-state [:settings] y)]
+    new-sets))
+
 ;;------------------------------------------------------------------------------
 ;; Event triggers
 ;;------------------------------------------------------------------------------
+
+;; TODO: need to format "settings" properly before sending to server
 (defn- on-format [response]
-  ;;(js-log (str response))
   (swap! state assoc :value response :success? true :error? false))
 
 (defn- on-error [response]
   (if (= (:status response) 400)
     (let [resp (:response response)]
       (swap! state conj resp {:success? false :error? true}))
+    ;; unknown server error
     (throw (:status-text response))))
 
 (defn- on-style-change [evt]
-  (aset js/window "location" "hash" (str "/format/" (.-value (.-target evt)))))
+  (aset js/window "location" "hash" (str "/format/" (-> evt .-target .-value))))
 
 (defn- on-btn-click [evt]
-  (let [input (:value @state)]
-    (format-input (:uri @state) input on-format on-error)))
+  (log @state)
+  (format-input (normalize-settings @state) on-format on-error))
+
+(defn- reset-state! [new-state]
+  (reset! state (assoc new-state :success? false :error? false)))
+
+(defn- on-range-change [k evt new-state]
+  (reset-state!
+    (assoc-in new-state [:settings k :value] (int (-> evt .-target .-value)))))
+
+(defn- on-checkbox-change [k evt new-state]
+  (reset-state!
+    (assoc-in
+      new-state
+      [:settings k :checked]
+      (false? (get-in new-state [:settings k :checked] false)))))
+
+(def event-map {"range" on-range-change, "checkbox" on-checkbox-change})
+
+(defn- on-change-evt [k]
+  (fn [evt] ((get event-map (-> evt .-target .-type)) k evt @state)))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
@@ -46,9 +71,9 @@
 
 (def github-url "https://github.com/comamitc/pretty-print.net")
 (def issues-url "https://github.com/comamitc/pretty-print.net/issues")
-(def docs-url "https://github.com/comamitc/pretty-print.net/blob/master/README.md")
+(def docs-url "http://pretty-print.net/#/about")
 
-(quiescent/defcomponent footer-docs-list []
+(defn footer-docs-list []
   (sablono/html
   [:div.col-ace4b
     [:ul
@@ -87,7 +112,7 @@
 (def pp-license-url
   "https://github.com/comamitc/pretty-print.net/blob/master/LICENSE.md")
 
-(quiescent/defcomponent footer-bottom []
+(defn footer-bottom []
   (sablono/html
   [:div.bottom-31b43
     [:div.left-1764b
@@ -99,7 +124,7 @@
         [:span.ftr-info-a5716 ".net"]]]
     [:div.clr-43e49]]))
 
-(quiescent/defcomponent footer []
+(defn footer []
   (sablono/html
   [:div.ftr-outer-6bcd3
     [:div.ftr-inner-557c9
@@ -138,38 +163,69 @@
           (InputOptions state)]
         [:div.clr-217e3]]]))
 
+(defn HeaderNoState []
+  (sablono/html
+    [:header.header-outer-c5e7d
+      [:div.header-inner-0f889
+        [:div.left-9467a
+          [:a.home-link-e4c1e {:href ""}
+            "pretty-print"
+            [:span.net-84e9a ".net"]]]
+        [:div.clr-217e3]]]))
+
 ;;------------------------------------------------------------------------------
 ;; Body
 ;;------------------------------------------------------------------------------
 
+
+(quiescent/defcomponent SettingsAction [settings]
+  (sablono/html
+    [:div.settings-wrapper-751dc
+      [:div.settings-hdr-fa6ca "Settings"]
+      (map (fn [[k v]]
+              [:div.setting-e0ddb
+                [:div.setting-label-abd34 
+                  (str (:name v) " ") [:span.set-value-06ba3 (:value v) ]]
+                [:div
+                  [:input
+                    (assoc v :on-change (on-change-evt k))]
+                  [:label.label-f831f {:for (:id v)}]]]) settings)]))
+
+(quiescent/defcomponent FormatAction [new-state]
+  (sablono/html
+    [:div.format-action-7ac2a
+      [:button#formatBtn.btn-2d976
+          {:on-click #(on-btn-click %1)
+           :disabled (if (empty? (:value new-state)) true false)}
+            "Format"]
+        (when (:error? new-state)
+          [:div.error-disp-7c4aa
+            [:i.fa.fa-times-circle.fa-2]
+            [:span.err-ttl-0867b "Format Error"]
+              [:div.msg-6f5ee (:msg new-state)]
+              (when (some? (:line new-state))
+                [:div.line-b55e8 (str "@line: " (:line new-state))
+              (when (some? (:column new-state))
+                (str "; column: " (:column new-state)))])])
+        (when (:success? new-state)
+          [:div.success-disp-3a51b
+            [:i.fa.fa-check-circle.fa-2]
+            [:span.success-ttl-390ee "Success"]])]))
+
 (quiescent/defcomponent RightBody [new-state]
   (sablono/html
-    [:div.right-body-caf9a
-      [:button#formatBtn.btn-2d976 
-        {:on-click #(on-btn-click %1) 
-         :disabled (if (empty? (:value new-state)) true false)} 
-          "Format"]
-      (when (:error? new-state)
-        [:div.error-disp-7c4aa
-          [:i.fa.fa-times-circle.fa-2] 
-          [:span.err-ttl-0867b "Format Error"]
-            [:div.msg-6f5ee (:msg new-state)]
-            (when (some? (:line new-state))
-              [:div.line-b55e8 (str "@line: " (:line new-state))
-            (when (some? (:column new-state))
-              (str "; column: " (:column new-state)))])])
-      (when (:success? new-state)
-        [:div.success-disp-3a51b
-          [:i.fa.fa-check-circle.fa-2]
-          [:span.success-ttl-390ee "Success"]])]))
+    (let [settings (:settings new-state)]
+      [:div.right-body-caf9a
+        (when (not (empty? settings)) (SettingsAction settings))
+        (FormatAction new-state)])))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
     [:div.left-body-ca07e
       [:textarea#mainTextarea.text-f3988
         {:value (:value new-state)
-         :on-change #(swap! state assoc :value (-> % .-target .-value) 
-                                        :success? false 
+         :on-change #(swap! state assoc :value (-> % .-target .-value)
+                                        :success? false
                                         :error? false)}]]))
 
 (quiescent/defcomponent Footer []
@@ -177,7 +233,7 @@
     [:footer.ftr-outer-6bcd3
       (footer)]))
 
-(quiescent/defcomponent Body [state]
+(quiescent/defcomponent MainPage [state]
   (sablono/html
     [:div#pageWrapper
       (Header state)
@@ -185,8 +241,33 @@
             [:div.body-inner-40af1
               [:h2.instructions-b15d3 (str "Paste " (:desc state) ":")]
               (LeftBody state)
-              (RightBody state) 
+              (RightBody state)
               [:div.clr-217e3]]]
+      (footer)]))
+
+(defn AboutPage []
+  (sablono/html
+    [:div#pageWrapper
+      (HeaderNoState)
+      [:div.body-outer-7cb5e
+        [:div.body-inner-5a8ac
+          [:h2.instructions-b15d3 "Rationale"]
+          [:p.text-block-d714f
+          (str "EDN is a powerful data interchange format commonly used with "
+            "Clojure  and ClojureScript programs. It also doubles as a literal "
+            "representation of most Clojure data structures, which are often "
+            "printed to a REPL or console environment for debugging purposes. ")]
+          [:p.text-block-d714f
+            (str "Clojure core comes with clojure.pprint - which is a library to "
+            "format Clojure code (and thus EDN) in a human-readable fashion. ")]
+          [:p.text-block-d714f
+            (str "As of January 2015, there are numerous online services to pretty "
+            "print various data interchange formats (JSON, YAML, XML, etc), "
+            "but there is no online service for printing an EDN string.")]
+          [:p.text-block-d714f
+            (str "This project aims to build such a service and improve the "
+            "usability of working with EDN data.")]
+        [:div.clr-217e3]]]
       (footer)]))
 
 ;;------------------------------------------------------------------------------
@@ -205,7 +286,7 @@
     (set! anim-frame-id nil))
 
   ;; put the render function on the next animation frame
-  (let [render-fn #(quiescent/render (Body new-state) (by-id "bodyWrapper"))]
+  (let [render-fn #(quiescent/render (MainPage new-state) (by-id "bodyWrapper"))]
     (set! anim-frame-id (request-anim-frame render-fn))))
 
 (add-watch state :main on-change-state)
@@ -213,7 +294,7 @@
 ;;------------------------------------------------------------------------------
 ;; init
 ;;------------------------------------------------------------------------------
+(defn init! [style] (swap! state conj style))
 
-(defn init! [style]
-  (swap! state conj style))
+(defn about-init! [] (quiescent/render (AboutPage) (by-id "bodyWrapper")))
 
