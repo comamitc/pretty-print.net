@@ -31,7 +31,9 @@ grunt.initConfig({
   },
   injector: {
       options: {
-        addRootSlash: false
+        addRootSlash: false,
+        relative: true,
+        ignorePath: "/public"
       },
       dev: {
         files: {
