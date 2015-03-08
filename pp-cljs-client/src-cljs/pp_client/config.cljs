@@ -41,3 +41,5 @@
                   :desc "Clojure Code"
                   :uri "/jvm/format/clj"
                   :settings default-clj-settings}})
+
+(def state (atom {:success? false :error? false :value ""}))
