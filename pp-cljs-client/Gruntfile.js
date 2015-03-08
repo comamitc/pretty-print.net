@@ -28,15 +28,31 @@ grunt.initConfig({
       files: "less/*.less",
       tasks: "less:watch"
     }
-  }
+  },
+  injector: {
+      options: {
+        addRootSlash: false
+      },
+      dev: {
+        files: {
+          'public/index.html': ['public/js/pretty-print.js']
+        }
+      },
+      build: {
+        files: {
+          'public/index.html': ['public/js/**/*.min.js']
+        }
+      }
+    }
 
 });
 
 // load tasks from npm
 grunt.loadNpmTasks('grunt-contrib-less');
 grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-injector');
 
-grunt.registerTask('default', 'watch');
-
+grunt.registerTask('default', ['injector:dev','watch']);
+grunt.registerTask('build', ['injector:build','less']);
 // end module.exports
 };

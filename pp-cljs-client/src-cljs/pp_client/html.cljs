@@ -10,7 +10,7 @@
 (def state (atom {:success? false :error? false :value ""}))
 
 ;;------------------------------------------------------------------------------
-;; URLs
+;; Helpers
 ;;------------------------------------------------------------------------------
 
 (defn- url [path] path)
@@ -18,25 +18,52 @@
     ;;(str (replace base-href #"/$" "") path)
     ;;path))
 
+(defn- normalize-settings [curr-state]
+  (let [settings (:settings curr-state)
+        y (into {} (for [[k v] settings] [k (or (:value v) (:checked v))]))
+        new-sets (assoc-in curr-state [:settings] y)]
+    new-sets))
+
 ;;------------------------------------------------------------------------------
 ;; Event triggers
 ;;------------------------------------------------------------------------------
+
+;; TODO: need to format "settings" properly before sending to server
 (defn- on-format [response]
-  ;;(js-log (str response))
   (swap! state assoc :value response :success? true :error? false))
 
 (defn- on-error [response]
   (if (= (:status response) 400)
     (let [resp (:response response)]
       (swap! state conj resp {:success? false :error? true}))
+    ;; unknown server error
     (throw (:status-text response))))
 
 (defn- on-style-change [evt]
-  (aset js/window "location" "hash" (str "/format/" (.-value (.-target evt)))))
+  (aset js/window "location" "hash" (str "/format/" (-> evt .-target .-value))))
 
 (defn- on-btn-click [evt]
-  (let [input (:value @state)]
-    (format-input (:uri @state) input on-format on-error)))
+  (log @state)
+  (format-input (normalize-settings @state) on-format on-error))
+
+(defn- reset-state! [new-state]
+  (reset! state (assoc new-state :success? false :error? false)))
+
+(defn- on-range-change [k evt new-state]
+  (reset-state!
+    (assoc-in new-state [:settings k :value] (int (-> evt .-target .-value)))))
+
+(defn- on-checkbox-change [k evt new-state]
+  (reset-state!
+    (assoc-in
+      new-state
+      [:settings k :checked]
+      (false? (get-in new-state [:settings k :checked] false)))))
+
+(def event-map {"range" on-range-change, "checkbox" on-checkbox-change})
+
+(defn- on-change-evt [k]
+  (fn [evt] ((get event-map (-> evt .-target .-type)) k evt @state)))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
@@ -44,7 +71,7 @@
 
 (def github-url "https://github.com/comamitc/pretty-print.net")
 (def issues-url "https://github.com/comamitc/pretty-print.net/issues")
-(def docs-url "#/about")
+(def docs-url "http://pretty-print.net/#/about")
 
 (defn footer-docs-list []
   (sablono/html
@@ -150,34 +177,55 @@
 ;; Body
 ;;------------------------------------------------------------------------------
 
+
+(quiescent/defcomponent SettingsAction [settings]
+  (sablono/html
+    [:div.settings-wrapper-751dc
+      [:div.settings-hdr-fa6ca "Settings"]
+      (map (fn [[k v]]
+              [:div.setting-e0ddb
+                [:div.setting-label-abd34 
+                  (str (:name v) " ") [:span.set-value-06ba3 (:value v) ]]
+                [:div
+                  [:input
+                    (assoc v :on-change (on-change-evt k))]
+                  [:label.label-f831f {:for (:id v)}]]]) settings)]))
+
+(quiescent/defcomponent FormatAction [new-state]
+  (sablono/html
+    [:div.format-action-7ac2a
+      [:button#formatBtn.btn-2d976
+          {:on-click #(on-btn-click %1)
+           :disabled (if (empty? (:value new-state)) true false)}
+            "Format"]
+        (when (:error? new-state)
+          [:div.error-disp-7c4aa
+            [:i.fa.fa-times-circle.fa-2]
+            [:span.err-ttl-0867b "Format Error"]
+              [:div.msg-6f5ee (:msg new-state)]
+              (when (some? (:line new-state))
+                [:div.line-b55e8 (str "@line: " (:line new-state))
+              (when (some? (:column new-state))
+                (str "; column: " (:column new-state)))])])
+        (when (:success? new-state)
+          [:div.success-disp-3a51b
+            [:i.fa.fa-check-circle.fa-2]
+            [:span.success-ttl-390ee "Success"]])]))
+
 (quiescent/defcomponent RightBody [new-state]
   (sablono/html
-    [:div.right-body-caf9a
-      [:button#formatBtn.btn-2d976 
-        {:on-click #(on-btn-click %1) 
-         :disabled (if (empty? (:value new-state)) true false)} 
-          "Format"]
-      (when (:error? new-state)
-        [:div.error-disp-7c4aa
-          [:i.fa.fa-times-circle.fa-2] 
-          [:span.err-ttl-0867b "Format Error"]
-            [:div.msg-6f5ee (:msg new-state)]
-            (when (some? (:line new-state))
-              [:div.line-b55e8 (str "@line: " (:line new-state))
-            (when (some? (:column new-state))
-              (str "; column: " (:column new-state)))])])
-      (when (:success? new-state)
-        [:div.success-disp-3a51b
-          [:i.fa.fa-check-circle.fa-2]
-          [:span.success-ttl-390ee "Success"]])]))
+    (let [settings (:settings new-state)]
+      [:div.right-body-caf9a
+        (when (not (empty? settings)) (SettingsAction settings))
+        (FormatAction new-state)])))
 
 (quiescent/defcomponent LeftBody [new-state]
   (sablono/html
     [:div.left-body-ca07e
       [:textarea#mainTextarea.text-f3988
         {:value (:value new-state)
-         :on-change #(swap! state assoc :value (-> % .-target .-value) 
-                                        :success? false 
+         :on-change #(swap! state assoc :value (-> % .-target .-value)
+                                        :success? false
                                         :error? false)}]]))
 
 (quiescent/defcomponent Footer []
@@ -193,7 +241,7 @@
             [:div.body-inner-40af1
               [:h2.instructions-b15d3 (str "Paste " (:desc state) ":")]
               (LeftBody state)
-              (RightBody state) 
+              (RightBody state)
               [:div.clr-217e3]]]
       (footer)]))
 
@@ -205,18 +253,18 @@
         [:div.body-inner-5a8ac
           [:h2.instructions-b15d3 "Rationale"]
           [:p.text-block-d714f
-          (str "EDN is a powerful data interchange format commonly used with " 
-            "Clojure  and ClojureScript programs. It also doubles as a literal " 
-            "representation of most Clojure data structures, which are often " 
+          (str "EDN is a powerful data interchange format commonly used with "
+            "Clojure  and ClojureScript programs. It also doubles as a literal "
+            "representation of most Clojure data structures, which are often "
             "printed to a REPL or console environment for debugging purposes. ")]
           [:p.text-block-d714f
-            (str "Clojure core comes with clojure.pprint - which is a library to " 
+            (str "Clojure core comes with clojure.pprint - which is a library to "
             "format Clojure code (and thus EDN) in a human-readable fashion. ")]
           [:p.text-block-d714f
-            (str "As of January 2015, there are numerous online services to pretty " 
-            "print various data interchange formats (JSON, YAML, XML, etc), " 
+            (str "As of January 2015, there are numerous online services to pretty "
+            "print various data interchange formats (JSON, YAML, XML, etc), "
             "but there is no online service for printing an EDN string.")]
-          [:p.text-block-d714f 
+          [:p.text-block-d714f
             (str "This project aims to build such a service and improve the "
             "usability of working with EDN data.")]
         [:div.clr-217e3]]]

@@ -10,7 +10,7 @@ object ScalaFormat {
 
   // TODO: make settings an Option[String] pass for customization
   // TODO: we don't use tipe!
-  def formatScala(input: String, tipe: String): String = {
+  def formatScala(input: String): String = {
     try {
       ScalaFormatter.format(input, preferences)
     } catch {
