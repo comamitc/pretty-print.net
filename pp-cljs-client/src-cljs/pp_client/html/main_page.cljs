@@ -2,7 +2,7 @@
   (:require 
     [pp-client.dom :refer [by-id]]
     [pp-client.util :refer [js-log log]]
-    [pp-client.data :refer [format-input]]
+    [pp-client.data :refer [format-input set-localstorage!]]
     [pp-client.html.common :refer [footer]]
     [pp-client.config :refer [state]]
     [quiescent :include-macros true]
@@ -37,7 +37,7 @@
   (aset js/window "location" "hash" (str "/format/" (-> evt .-target .-value))))
 
 (defn- on-btn-click [evt]
-  (log @state)
+  (set-localstorage! (:id @state) (:settings @state))
   (format-input (normalize-settings @state) on-format on-error))
 
 (defn- reset-state! [new-state]
@@ -70,9 +70,9 @@
       [:optgroup {:label "Clojure"}
         [:option {:value "clj"} "Clojure Code"]
         [:option {:value "edn"} "EDN"]
-      ;;[:optgroup {:label "JavaScript"}
+      [:optgroup {:label "JavaScript"}
       ;;  [:option {:value "js"} "JavaScript Code"]
-      ;;  [:option {:value "json"} "JSON"]]
+        [:option {:value "json"} "JSON"]]
         ]]))
 
 (quiescent/defcomponent Header [state]

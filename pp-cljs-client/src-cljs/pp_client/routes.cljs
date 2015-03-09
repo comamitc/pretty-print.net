@@ -3,8 +3,10 @@
       [goog.events :as events]
       [goog.history.EventType :as EventType]
       [secretary.core :as secretary :refer-macros [defroute]]
+      [cljs.reader :refer [read-string]]
       [pp-client.html.main-page :refer [main-init!]]
       [pp-client.html.about-page :refer [about-init!]]
+      [pp-client.data :refer [get-localstorage]]
       [pp-client.util :refer [js-log log]]
       [pp-client.config :refer [style-map]])
   (:import goog.History))
@@ -21,7 +23,16 @@
   (let [norm-style (.toLowerCase style)
         valid-style? (contains? style-map norm-style)]
     (if valid-style?
-      (main-init! (get style-map norm-style))
+      ;; then
+      (let [custom-preset (get-localstorage norm-style)
+            style (get style-map norm-style)]
+        (log custom-preset)
+        (if (or (some? custom-preset) (not (empty? custom-preset)))
+          ;; then
+          (main-init! (assoc style :settings (read-string custom-preset)))
+          ;; else
+          (main-init! style)))
+      ;; else
       (set-default-uri norm-style))))
 
 (defroute "/about" [] (about-init!))
