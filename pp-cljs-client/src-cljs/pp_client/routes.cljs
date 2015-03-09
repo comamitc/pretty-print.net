@@ -27,7 +27,7 @@
       (let [custom-preset (get-localstorage norm-style)
             style (get style-map norm-style)]
         (log custom-preset)
-        (if (some? custom-preset)
+        (if (or (some? custom-preset) (not (empty? custom-preset)))
           ;; then
           (main-init! (assoc style :settings (read-string custom-preset)))
           ;; else
