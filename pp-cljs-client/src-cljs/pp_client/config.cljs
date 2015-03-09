@@ -32,14 +32,19 @@
                                :checked false}})
 
 (def style-map {"edn"
-                 {:id "edn"
-                  :desc "EDN"
-                  :uri "/jvm/format/edn"
-                  :settings default-clj-settings}
+                  {:id "edn"
+                   :desc "EDN"
+                   :uri "/jvm/format/edn"
+                   :settings default-clj-settings}
                 "clj"
-                 {:id "clj"
-                  :desc "Clojure Code"
-                  :uri "/jvm/format/clj"
-                  :settings default-clj-settings}})
+                  {:id "clj"
+                   :desc "Clojure Code"
+                   :uri "/jvm/format/clj"
+                   :settings default-clj-settings}
+                "json"
+                  {:id "json"
+                   :desc "JSON"
+                   :uri "/jvm/format/json"
+                   :settings {}}})
 
 (def state (atom {:success? false :error? false :value ""}))

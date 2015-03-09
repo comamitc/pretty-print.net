@@ -70,9 +70,9 @@
       [:optgroup {:label "Clojure"}
         [:option {:value "clj"} "Clojure Code"]
         [:option {:value "edn"} "EDN"]
-      ;;[:optgroup {:label "JavaScript"}
+      [:optgroup {:label "JavaScript"}
       ;;  [:option {:value "js"} "JavaScript Code"]
-      ;;  [:option {:value "json"} "JSON"]]
+        [:option {:value "json"} "JSON"]]
         ]]))
 
 (quiescent/defcomponent Header [state]
