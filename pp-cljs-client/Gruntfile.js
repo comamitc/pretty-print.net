@@ -42,7 +42,7 @@ grunt.initConfig({
       },
       build: {
         files: {
-          'public/index.html': ['public/js/**/*.min.js']
+          'public/index.release.html': ['public/js/**/*.min.js']
         }
       }
     }
