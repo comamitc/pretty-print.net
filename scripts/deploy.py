@@ -28,18 +28,19 @@ def client(fn, ctx, dir):
     fn("lein cljsbuild once main-min")
     fn("grunt build")
     
-def pull(dir):
-  with cd(dir):
-    run("git pull origin master")
+def setup(fn, ctx, dir):
+  with ctx(dir):
+    fn("sudo npm install -g grunt-cli")
+    fn("git pull origin master")
 
 @task
 def test():
-  #client(local, lcd, dirs['local_client'])
+  setup(local, lcd, curr_dir)
+  client(local, lcd, dirs['local_client'])
   server(local, lcd, dirs['local_server'])
 
 @task
 def deploy():
-  env.hosts = ['root@192.241.224.183']
   pull(dirs['remote_base'])
   client(run, cd, dirs['remote_client'])
   server_down()
