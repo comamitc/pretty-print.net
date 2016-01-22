@@ -8,7 +8,7 @@ cd ./pp-cljs-client
 
 ## node work
 echo "building node assets for client..."
-sudo npm install -g grunt-cli
+npm install -g grunt-cli
 npm install
 grunt prod
 
