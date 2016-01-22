@@ -54,7 +54,7 @@ grunt.loadNpmTasks('grunt-contrib-less');
 grunt.loadNpmTasks('grunt-contrib-watch');
 grunt.loadNpmTasks('grunt-injector');
 
-grunt.registerTask('default', ['injector:dev','watch']);
-grunt.registerTask('build', ['injector:build','less']);
+grunt.registerTask('default', ['watch']);
+grunt.registerTask('prod', ['less']);
 // end module.exports
 };
