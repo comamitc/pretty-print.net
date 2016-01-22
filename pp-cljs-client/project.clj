@@ -18,6 +18,8 @@
 
   :clean-targets ["target" "public/out" "public/out-min" "public/js/pretty-print.js" "public/js/pretty-print.min.js"]
 
+  :jvm-opts ["-Xmx384m"]
+
   :cljsbuild {
     :builds {
       :main {

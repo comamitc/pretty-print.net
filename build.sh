@@ -1,3 +1,7 @@
+#   this has to be here because of memory concerns on destination server
+echo "killing old jvm server process..."
+pkill -f "target/pp-jvm-server-0.1.0-standalone.jar"
+
 # copy default config file
 echo "copying config file..."
 cp ./config/config.example.json ./config/config.json
