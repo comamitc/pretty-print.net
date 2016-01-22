@@ -3,4 +3,5 @@ config.json
 pretty-print.js
 pretty-print.min.js
 main.min.css
+nohup.out
 
