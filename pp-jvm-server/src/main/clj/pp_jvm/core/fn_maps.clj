@@ -30,7 +30,7 @@
   (let [type-norm (to-lower tipe)]
     (try
       {:status 200
-       :headers {"Content-Type" "application/json"}
+       :headers {"Content-Type" "application/json; charset=utf8"}
        :body (generate-string ((get typefn type-norm) input 
                                                       type-norm 
                                                       settings))}
@@ -38,5 +38,5 @@
         (let [err-msg (.getMessage e)]
           (log/error e)
            {:status 400
-            :headers {"Content-Type" "application/json"}
+            :headers {"Content-Type" "application/json; charset=utf8"}
             :body (generate-string (parse-exception! err-msg))})))))

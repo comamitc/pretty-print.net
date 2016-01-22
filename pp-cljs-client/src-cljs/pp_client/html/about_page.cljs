@@ -1,6 +1,7 @@
 (ns pp-client.html.about-page
   (:require 
     [pp-client.html.common :refer [footer]]
+    [pp-client.dom :refer [by-id]]
     [quiescent :include-macros true]
     [sablono.core :as sablono :include-macros true]))
 
