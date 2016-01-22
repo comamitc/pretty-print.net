@@ -16,7 +16,7 @@
 
   :source-paths ["src"]
 
-  :clean-targets ["target" "public/js/pretty-print.js" "public/js/pretty-print.min.js"]
+  :clean-targets ["target" "public/out" "public/js/pretty-print.js" "public/js/pretty-print.min.js"]
 
   :cljsbuild {
     :builds {
@@ -24,6 +24,7 @@
         :source-paths ["src-cljs"]
         :compiler {
           :output-to "public/js/pretty-print.js"
+          :output-dir "public/out"
           :optimizations :whitespace}}
 
       :main-min {
