@@ -1,5 +1,9 @@
 # pretty-print.net
 
+[![Codeship Status](https://codeship.com/projects/8d600b00-a35d-0133-0ef4-1ac8bff03ae9/status?branch=master
+)](https://www.codeship.io/projects/129215)
+
+
 ## Rationale
 
 EDN is a powerful data interchange format commonly used with Clojure and ClojureScript programs. It also doubles as a literal representation of most Clojure data structures, which are often printed to a REPL or console environment for debugging purposes.
