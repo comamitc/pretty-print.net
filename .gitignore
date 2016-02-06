@@ -4,7 +4,6 @@ pretty-print.js
 pretty-print.min.js
 main.min.css
 nohup.out
-pp-cljs-client/
 
 pom.xml
 *jar
@@ -35,5 +34,3 @@ pom.xml.asc
 *.log
 /node_modules
 server.js
-
-
