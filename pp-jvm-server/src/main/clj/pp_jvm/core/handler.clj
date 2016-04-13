@@ -23,6 +23,8 @@
       (log/debug "input: " input)
       (log/debug "settings: " settings)
       (mapfn input tipe settings)))
+  (GET "/jvm/ping" request
+    "OK")
   (route/not-found "Not Found"))
 
 (run-jetty (wrap-refresh app-routes) {:port (:jvm-server-port config)})
