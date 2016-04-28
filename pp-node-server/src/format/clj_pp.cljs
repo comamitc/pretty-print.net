@@ -9,7 +9,8 @@
                                  *print-suppress-namespaces*
                                  code-dispatch
                                  simple-dispatch]]
-            [cljs.reader :as reader]))
+            [cljs.reader :as reader]
+            [utils :as utils]))
 
 (def dispatch-mode {"clj" code-dispatch
                     "edn" simple-dispatch})
@@ -23,22 +24,22 @@
                        :pretty              *print-pretty*
                        :dispatch            *print-pprint-dispatch*})
 
-(defn format-string
-  [input mode settings]
-  (let [presets (merge default-settings settings)
-        result  (write (reader/read-string input)
-                       :pretty              (:pretty presets)
-                       :stream              nil
-                       :right-margin        (:right-margin presets)
-                       :miser-width         (:miser-width presets)
-                       :base                (:base presets)
-                       :length              (:length presets)
-                       :radix               (:radix presets)
-                       :suppress-namespace  (:suppress-namespace presets)
-                       :dispatch            (get dispatch-mode format-type))]
-    (print result)
-    result))
+(defn- format-string
+  [input settings mode]
+  (let [presets (merge default-settings settings)]
+    (write (reader/read-string input)
+           :pretty              (:pretty presets)
+           :stream              nil
+           :right-margin        (:right-margin presets)
+           :miser-width         (:miser-width presets)
+           :base                (:base presets)
+           :length              (:length presets)
+           :radix               (:radix presets)
+           :suppress-namespace  (:suppress-namespace presets)
+           :dispatch            (get dispatch-mode mode))))
 
-(defn format-clj [tipe input settings]
-  ([input mode] (format-clj input mode nil))
-  ([input mode settings] (format-string input mode settings)))
+
+
+(defn format-clj
+  [input settings mode]
+  (format-string input settings mode))
