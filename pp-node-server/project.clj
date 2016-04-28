@@ -9,6 +9,6 @@
            :output-to "server.js",
            :target :nodejs,
            :pretty-print true}}]}
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2665"]]
-  :plugins [[lein-cljsbuild "1.0.4"]])
+  :dependencies [[org.clojure/clojure "1.7.0"]
+                 [org.clojure/clojurescript "1.7.170"]]
+  :plugins [[lein-cljsbuild "1.1.3"]])
