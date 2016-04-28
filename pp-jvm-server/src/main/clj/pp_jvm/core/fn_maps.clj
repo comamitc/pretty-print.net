@@ -9,7 +9,7 @@
 ;; TODO we don't use settings
 ;; TODO we don't use tipe
 (defn- format-scala
-  [input tipe settings] 
+  [input tipe settings]
   (ppjvm.format.ScalaFormat/formatScala input))
 
 (def typefn
@@ -31,12 +31,12 @@
     (try
       {:status 200
        :headers {"Content-Type" "application/json; charset=utf8"}
-       :body (generate-string ((get typefn type-norm) input 
-                                                      type-norm 
+       :body (generate-string ((get typefn type-norm) input
+                                                      type-norm
                                                       settings))}
       (catch Exception e
         (let [err-msg (.getMessage e)]
           (log/error e)
-           {:status 400
-            :headers {"Content-Type" "application/json; charset=utf8"}
-            :body (generate-string (parse-exception! err-msg))})))))
+          {:status 400
+           :headers {"Content-Type" "application/json; charset=utf8"}
+           :body (generate-string (parse-exception! err-msg))})))))

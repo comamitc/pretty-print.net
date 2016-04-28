@@ -12,4 +12,6 @@ pom.xml
 /public/css/main.min.css
 /public/js/main.js
 /public/js/main.min.js
+/public/out/
+/public/out-min/
 *.diff

@@ -1,5 +1,5 @@
 (ns pp-client.html.main-page
-  (:require 
+  (:require
     [pp-client.dom :refer [by-id]]
     [pp-client.util :refer [js-log log]]
     [pp-client.data :refer [format-input set-localstorage!]]
@@ -70,10 +70,9 @@
       [:optgroup {:label "Clojure"}
         [:option {:value "clj"} "Clojure Code"]
         [:option {:value "edn"} "EDN"]
-      [:optgroup {:label "JavaScript"}
-      ;;  [:option {:value "js"} "JavaScript Code"]
-        [:option {:value "json"} "JSON"]]
-        ]]))
+       [:optgroup {:label "JavaScript"}
+         [:option {:value "json"} "JSON"]]]]))
+
 
 (quiescent/defcomponent Header [state]
   (sablono/html
@@ -97,8 +96,8 @@
       [:div.settings-hdr-fa6ca "Settings"]
       (map (fn [[k v]]
               [:div.setting-e0ddb
-                [:div.setting-label-abd34 
-                  (str (:name v) " ") [:span.set-value-06ba3 (:value v) ]]
+                [:div.setting-label-abd34
+                  (str (:name v) " ") [:span.set-value-06ba3 (:value v)]]
                 [:div
                   [:input
                     (assoc v :on-change (on-change-evt k))]
@@ -110,20 +109,20 @@
       [:button#formatBtn.btn-2d976
           {:on-click #(on-btn-click %1)
            :disabled (if (empty? (:value new-state)) true false)}
-            "Format"]
-        (when (:error? new-state)
-          [:div.error-disp-7c4aa
-            [:i.fa.fa-times-circle.fa-2]
-            [:span.err-ttl-0867b "Format Error"]
-              [:div.msg-6f5ee (:msg new-state)]
-              (when (some? (:line new-state))
-                [:div.line-b55e8 (str "@line: " (:line new-state))
-              (when (some? (:column new-state))
-                (str "; column: " (:column new-state)))])])
-        (when (:success? new-state)
-          [:div.success-disp-3a51b
-            [:i.fa.fa-check-circle.fa-2]
-            [:span.success-ttl-390ee "Success"]])]))
+          "Format"]
+      (when (:error? new-state)
+        [:div.error-disp-7c4aa
+          [:i.fa.fa-times-circle.fa-2]
+          [:span.err-ttl-0867b "Format Error"]
+          [:div.msg-6f5ee (:msg new-state)]
+          (when (some? (:line new-state))
+            [:div.line-b55e8 (str "@line: " (:line new-state))
+             (when (some? (:column new-state))
+               (str "; column: " (:column new-state)))])])
+      (when (:success? new-state)
+        [:div.success-disp-3a51b
+          [:i.fa.fa-check-circle.fa-2]
+          [:span.success-ttl-390ee "Success"]])]))
 
 (quiescent/defcomponent RightBody [new-state]
   (sablono/html
