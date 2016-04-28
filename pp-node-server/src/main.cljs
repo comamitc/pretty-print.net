@@ -12,7 +12,7 @@
 (def app (express))
 
 (def config
-  (util/json-parse (node/require "../config/config.json")))
+  (util/json-parse (node/require "../../../config/config.json")))
 
 (def typefns {"js"   web/format-js
               "json" web/format-js
@@ -37,15 +37,14 @@
               input    (:input body)
               settings (or (:settings body) {})]
           (try
-            (let [result ((get typefns tipe) input settings)]
+            (let [result ((get typefns tipe) input settings tipe)]
               (-> res
                   (.status 200)
-                  (.json ((get typefns tipe) input settings))))
+                  (.json (str result))))
             (catch :default e
               ;; TODO: figure out how to parse these errors!
               (do
-                (print e)
-                (.send (.status res 500) e)))))))
+                (.send (.status res 400) e)))))))
 
     ;; not found
     (.use (fn [req res] (.send (.status res 404) "Not Found"))))
