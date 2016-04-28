@@ -3,12 +3,14 @@
   :url "http://pretty-print.net"
   :cljsbuild
     {:builds
-      [{:source-paths ["src"],
-        :compiler
-          {:optimizations :simple,
-           :output-to "server.js",
-           :target :nodejs,
-           :pretty-print true}}]}
+      [ {:id "server"
+         :source-paths ["src/"]
+         :compiler {:main main
+                    :output-to "target/server/index.js"
+                    :output-dir "target/server"
+                    :target :nodejs
+                    :optimizations :none
+                    :source-map true}}]}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]]
   :plugins [[lein-cljsbuild "1.1.3"]])
