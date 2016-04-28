@@ -8,7 +8,7 @@
 
 (def default-settings {:indent_size           2
                        :indent_char           " "
-                       :max_preserve_newlines 2   })
+                       :max_preserve_newlines 2})
 
 ;; TODO: refactor this
 (defn format-js [input settings]
