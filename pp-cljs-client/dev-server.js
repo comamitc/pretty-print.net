@@ -51,6 +51,7 @@ function nodeProxy() {
 }
 
 app.use(clojureProxy('localhost', clojureProxyPort));
+app.use(nodeProxy('localhost', nodeProxyPort));
 
 // serve static files out of /public
 app.use(express.static(__dirname + '/public'));
