@@ -1,6 +1,5 @@
 (ns pp.server.main
   (:require [cljs.nodejs :as node]
-            [figwheel.client :as fw]
             [pp.server.utils :as util]
             [pp.server.format.javascript-pp :as web]
             [pp.server.format.clj-pp :as fclj]))
@@ -57,5 +56,3 @@
             (.listen (:cljs-server-port config)))))
 
 (set! *main-cli-fn* -main)
-
-(fw/start {})
