@@ -1,4 +1,4 @@
 echo "starting new server build..."
-cd ./pp-jvm-server
+cd ./pp-cljs-server
 
-nohup java -jar -Xmx384m target/pp-jvm-server-0.1.0-standalone.jar > nohup.out 2>&1 &
+forever -w start ./target/server/index.js

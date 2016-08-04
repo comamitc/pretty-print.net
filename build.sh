@@ -1,6 +1,8 @@
 #   this has to be here because of memory concerns on destination server
-echo "killing old jvm server process..."
-pkill -f "target/pp-jvm-server-0.1.0-standalone.jar"
+echo "killing old server process..."
+cd ./pp-node-server
+forever stop ./target/server/index.js
+cd ..
 
 # copy default config file
 echo "copying config file..."
@@ -25,9 +27,8 @@ cd ..
 
 # server
 echo "building server assets for jvm server..."
-cd ./pp-jvm-server
+cd ./pp-node-server
 
-lein clean
-lein ring uberjar
-
-
+npm install -g forever
+npm install
+lein cljsbuild once server
