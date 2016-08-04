@@ -20,19 +20,13 @@
 
   :jvm-opts ["-Xmx384m"]
 
-  :cljsbuild {
-              :builds {
-                       :main {
-                              :source-paths ["src-cljs"]
-                              :compiler {
-                                         :output-to "public/js/pretty-print.js"
-                                         :output-dir "public/out"
-                                         :optimizations :whitespace}}
+  :cljsbuild {:builds {:main {:source-paths ["src-cljs"]}}
+                 :compiler {:output-to "public/js/pretty-print.js"
+                            :output-dir "public/out"
+                            :optimizations :whitespace}
 
-                       :main-min {
-                                  :source-paths ["src-cljs"]
-                                  :compiler {
-                                             :output-to "public/js/pretty-print.min.js"
-                                             :output-dir "public/out-min"
-                                             :optimizations :advanced
-                                             :pretty-print false}}}})
+              :main-min {:source-paths ["src-cljs"]
+                         :compiler {:output-to "public/js/pretty-print.min.js"
+                                    :output-dir "public/out-min"
+                                    :optimizations :advanced
+                                    :pretty-print false}}})
