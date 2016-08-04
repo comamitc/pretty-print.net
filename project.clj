@@ -46,7 +46,7 @@
                                     "public/js/pretty-print.min.js"]
 
   :cljsbuild {:builds {:client {:source-paths ["src/pp/client"]
-                                :figwheel     {:on-jsload "pp.client.routes/init"}
+                                :figwheel     true
                                 :compiler {:main pp.client.core
                                            :output-to "public/js/pretty-print.js"
                                            :output-dir "public/js/out"
