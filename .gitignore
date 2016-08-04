@@ -2,7 +2,9 @@
 config.json
 pretty-print.js
 pretty-print.min.js
-main.min.css
+public/css/
+public/js/out/
+public/js/out-min/
 nohup.out
 
 pom.xml
@@ -16,9 +18,6 @@ pom.xml
 .lein-repl-history
 .lein-plugins/
 
-/public/css/main.min.css
-/public/js/main.js
-/public/js/main.min.js
 *.diff
 
 /target
