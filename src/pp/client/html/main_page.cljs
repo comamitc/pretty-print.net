@@ -68,8 +68,7 @@
     [:select#inputSelect.big-select-51b29
       {:on-change #(on-style-change %1) :value (:id new-state)}
       [:optgroup {:label "Clojure"}
-        [:option {:value "clj"} "Clojure Code"]
-        [:option {:value "edn"} "EDN"]
+        [:option {:value "clj"} "EDN / Clojure(Script)"]
        [:optgroup {:label "JavaScript"}
       ;;  [:option {:value "js"} "JavaScript Code"]
          [:option {:value "json"} "JSON"]]]]))

@@ -77,9 +77,9 @@
 //------------------------------------------------------------------------------
 // Variables
 //------------------------------------------------------------------------------
-@headerColor: #5a83d5;
+@headerColor: #5f7fbf;
 @primaryGreen: #60ac30;
-@goldenShower: #f0ad4e;
+@inputColor: darken(#96ca4b, 10%);
 @footerBlue: #5f7fbf;
 @footerBottomTextColor: #666;
 // NOTE: this is @cljLogoLightBlue with 50% opacity
@@ -102,7 +102,8 @@ body {
 }
 .header-inner-0f889 {
   margin: 0 auto;
-  width: 1200px;
+  max-width: 1200px;
+  padding: 0 20px;
 }
 .body-outer-7cb5e {
   background: #eee;
@@ -111,12 +112,14 @@ body {
 .body-inner-40af1 {
   margin: 0 auto;
   padding: 30px 0;
-  width: 1200px;
+  max-width: 980px;
+  width: 90%;
 }
 .body-inner-5a8ac {
   margin: 0 auto;
   padding: 30px 0;
-  width: 1200px;
+  max-width: 980px;
+  width: 90%;
   height: 589px;
 }
 .ftr-outer-6bcd3 {
@@ -166,23 +169,27 @@ body {
 }
 .left-body-ca07e {
   float: left;
-  width: 72%;
+  max-width: 720px;
+  width: 100%;
 }
 .right-body-caf9a {
   float: right;
-  width: 25%;
+  max-width: 200px;
+  width: 100%;
   height: 506px;
 }
 .btn-2d976 {
-  background: @goldenShower;
-  border: 1px solid #eee;
+  background: @inputColor;
+  border: 1px solid darken(@inputColor, 5%);
   color: #fff;
   .font-normal(24px);
   padding: 8px 16px;
   .rounded(4px);
   width: 100%;
+  letter-spacing: 1px;
   &:hover {
-    background: darken(@goldenShower, 5%);
+    cursor: pointer;
+    background: darken(@inputColor, 5%);
   }
 }
 .faqs-outer-dac3a {
@@ -264,9 +271,9 @@ body {
   text-transform: lowercase;
 }
 .ftr-home-link-2c3b4:hover {
-  color: #fff;
+  color: #aaa;
   .ftr-info-a5716 {
-    color: #fff;
+    color: #aaa;
   }
 }
 .left-1764b {
@@ -326,7 +333,7 @@ body {
 }
 
 .settings-hdr-fa6ca {
-  
+
   margin-top: -19px;
   padding: 5px;
   width: 75px;
@@ -366,10 +373,10 @@ body {
 input[type=range]::-ms-track {
     width: 300px;
     height: 5px;
-    
+
     /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
     background: transparent;
-    
+
     /*leave room for the larger thumb to overflow with a transparent border */
     border-color: transparent;
     border-width: 6px 0;
@@ -391,7 +398,7 @@ input[type=range]::-ms-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: @goldenShower;
+    background: @inputColor;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
@@ -417,7 +424,7 @@ input[type=range]::-webkit-slider-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: @goldenShower;
+    background: @inputColor;
     margin-top: -4px;
 }
 
@@ -431,10 +438,10 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 input[type=range]::-ms-track {
     width: 300px;
     height: 5px;
-    
+
     /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
     background: transparent;
-    
+
     /*leave room for the larger thumb to overflow with a transparent border */
     border-color: transparent;
     border-width: 6px 0;
@@ -455,7 +462,7 @@ input[type=range]::-ms-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: @goldenShower;
+    background: @inputColor;
 }
 input[type=range]:focus::-ms-fill-lower {
     background: #888;
@@ -510,11 +517,11 @@ input.cmn-toggle-round-flat + label:after {
   transition: margin 0.4s, background 0.4s;
 }
 input.cmn-toggle-round-flat:checked + label {
-  background-color: @goldenShower;
+  background-color: @inputColor;
 }
 input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 30px;
-  background-color: @goldenShower;
+  background-color: @inputColor;
 }
 .label-f831f {
   margin-left: 70%;
