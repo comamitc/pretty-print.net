@@ -1,4 +1,6 @@
-(defproject pp "0.1.0-SNAPSHOT"
+(def project-version "0.2.0")
+
+(defproject pp project-version
 
   :description "A Clojure(Script) Pretty Printer"
   :url "http://pretty-print.net/"
@@ -52,6 +54,7 @@
                                 :compiler {:main pp.client.core
                                            :output-to "public/js/pretty-print.js"
                                            :output-dir "public/js/out"
+                                           :closure-defines {pp.client.data/app-v ~project-version}
                                            :asset-path "js/out"}}
 
                        :client-min {:source-paths ["src/pp/client"]
@@ -59,6 +62,7 @@
                                                :output-to "public/js/pretty-print.min.js"
                                                :output-dir "public/js/out-min"
                                                :optimizations :advanced
+                                               :closure-defines {pp.client.data/app-v ~project-version}
                                                :pretty-print false}}
                        :server {:source-paths ["src/pp/server"]
                                 :figwheel true
