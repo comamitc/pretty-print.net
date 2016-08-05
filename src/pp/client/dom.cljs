@@ -1,7 +1,6 @@
 (ns pp.client.dom
   (:require
-    goog.dom
-    [pp.client.util :as util]))
+    goog.dom))
 
 ;;------------------------------------------------------------------------------
 ;; Some Native DOM Helper Functions

@@ -55,7 +55,7 @@
                        :client-min {:source-paths ["src/pp/client"]
                                     :compiler {:main pp.client.core
                                                :output-to "public/js/pretty-print.min.js"
-                                               :output-dir "public/out-min"
+                                               :output-dir "public/js/out-min"
                                                :optimizations :advanced
                                                :pretty-print false}}
                        :server {:source-paths ["src/pp/server"]
