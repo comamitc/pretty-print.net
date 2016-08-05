@@ -1,9 +1,12 @@
 (ns pp.client.data
   (:require
     [ajax.core :refer [GET POST]]
-    [pp.client.util :refer [js-log log]]))
+    [pp.client.util :refer [js-log log]]
+    [goog.crypt.base64 :as b64]))
 
-(def id "9c9fc")
+(goog-define app-v "0.0.0")
+
+(def id (b64/encodeString app-v))
 
 (defn format-input [state handler error-handler]
   (POST (:uri state) {:params {:input (:value state)
