@@ -6,6 +6,10 @@
 
 (enable-console-print!)
 
+(def env (aget (js->clj (.-env node/process)) "NODE_ENV"))
+
+(print env)
+
 (def http (node/require "http"))
 (def express (node/require "express"))
 (def body-parser (node/require "body-parser"))
@@ -48,7 +52,8 @@
             (fn [req res]
               (.send res "ok"))))
 
-(. app (use (serve-static "public" #js {:index "index.html"})))
+(when (not= env "production")
+  (. app (use (serve-static "public" #js {:index "index.html"}))))
 
 (def -main
   (fn []
