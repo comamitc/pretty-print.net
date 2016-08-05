@@ -1,4 +1,5 @@
-echo "starting new server build..."
-cd ./pp-jvm-server
+echo "stopping current server..."
+kill `lsof -n -iTCP:7000 -sTCP:LISTEN -t`
 
-nohup java -jar -Xmx384m target/pp-jvm-server-0.1.0-standalone.jar > nohup.out 2>&1 &
+echo "starting new server build..."
+NODE_ENV=production nohup node target/server/index.js > output.log &
