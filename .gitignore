@@ -2,9 +2,9 @@
 config.json
 pretty-print.js
 pretty-print.min.js
-public/css/
-public/js/out/
-public/js/out-min/
+resources/public/css/
+resources/public/js/out/
+resources/public/js/out-min/
 nohup.out
 
 pom.xml

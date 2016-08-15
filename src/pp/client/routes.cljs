@@ -4,8 +4,9 @@
       [goog.history.EventType :as EventType]
       [secretary.core :as secretary :refer-macros [defroute]]
       [cljs.reader :refer [read-string]]
-      [pp.client.html.main-page :refer [main-init!]]
-      [pp.client.html.about-page :refer [about-init!]]
+      [pp.client.html :refer [main-page]]
+      ; [pp.client.html.main-page :refer [main-init!]]
+      ; [pp.client.html.about-page :refer [about-init!]]
       [pp.client.data :refer [get-localstorage]]
       [pp.client.util :refer [js-log log]]
       [pp.client.config :refer [style-map]])
@@ -28,13 +29,13 @@
             style (get style-map norm-style)]
         (if (or (some? custom-preset) (not (empty? custom-preset)))
           ;; then
-          (main-init! (assoc style :settings (read-string custom-preset)))
+          (main-page (assoc style :settings (read-string custom-preset)))
           ;; else
-          (main-init! style)))
+          (main-page style)))
       ;; else
       (set-default-uri norm-style))))
-
-(defroute "/about" [] (about-init!))
+;
+; (defroute "/about" [] (about-init!))
 
 ;; TODO: make a 404 page
 (defroute "*" []
