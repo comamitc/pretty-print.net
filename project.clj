@@ -11,7 +11,9 @@
                  [org.clojure/clojurescript "1.7.228"]
                  [cljfmt "0.5.3"]
                  [secretary "1.2.1"]
-                 [rum "0.10.5"]]
+                 [rum "0.10.5"]
+                 [cljsjs/codemirror "5.11.0-2"]
+                 [org.clojure/core.async "0.2.385"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-npm "0.6.2"]

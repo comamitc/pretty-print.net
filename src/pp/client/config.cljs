@@ -1,8 +1,7 @@
 (ns pp.client.config)
 
 (def style-map
-  {:clj "Clojure Code"
-   :edn "EDN"
-   :json "JSON"})
+  {:clj "Clojure"
+   :json "JavaScript"})
 
-(def state (atom {:success? false :error? false :value "" :style :edn}))
+(def state (atom {:success? false :error? false :value nil :style :clj}))
