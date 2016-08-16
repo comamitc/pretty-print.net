@@ -14,7 +14,30 @@
 
 (secretary/set-config! :prefix "#")
 
+<<<<<<< HEAD
 (defroute "/" [] (main-page))
+=======
+(defn- set-default-uri
+  [style]
+  (js-log "found invalid style ")
+  (js-log style)
+  (aset js/window "location" "hash" "/format/edn"))
+
+(defroute "/format/:style" [style]
+  (let [norm-style (.toLowerCase style)
+        valid-style? (contains? style-map norm-style)]
+    (if valid-style?
+      ;; then
+      (let [custom-preset (get-localstorage norm-style)
+            style (get style-map norm-style)]
+        (if (or (some? custom-preset) (not (empty? custom-preset)))
+          ;; then
+          (main-page (assoc style :settings (read-string custom-preset)))
+          ;; else
+          (main-page style)))
+      ;; else
+      (set-default-uri norm-style))))
+>>>>>>> origin/44-client-format
 ;
 ; (defroute "/about" [] (about-init!))
 
