@@ -5,6 +5,7 @@
             [pp.client.util :refer [js-log log]]
             [pp.client.dom :refer [by-id]]
             [pp.client.config :refer [state style-map]]
+            [pp.client.format :refer [format-input!]]
             [cljsjs.codemirror]
             [cljsjs.codemirror.mode.clojure]
             [cljsjs.codemirror.mode.javascript]))
@@ -26,7 +27,10 @@
 
 (defn- handle-on-change [cm _]
   (let [*value (rum/cursor state :value)
-        v (.getValue cm)]
+        *cm    (:cm @state)
+        v      (.getValue cm)]
+    (when-not *cm
+      (swap! state assoc :cm cm))
     (reset! *value v)))
 
 (def mode-map {:clj "clojure" :edn "clojure" :json "javascript"})
@@ -39,6 +43,7 @@
                                  #js {:lineNumbers true}))
       (.on @cm "change" handle-on-change))
     (.setOption @cm "mode" (style mode-map))
+    ;; stupid hack because args are being treated "weird"
     (assoc st :cm @cm)))
 
 (def code-editor-mixin
@@ -82,6 +87,15 @@
        [:div.clr-43e49]
        (footer-bottom)]])
 
+(defn- handle-on-click [evt]
+  (let [d-state @state
+        *style (:style d-state)
+        *value (:value d-state)
+        *cm    (:cm d-state)
+        out    (format-input! *style *value)]
+     (when (contains? out :result)
+       (.setValue *cm (:result out)))))
+
 (rum/defc page-contents < rum/reactive []
   (let [*style (rum/cursor state :style)]
     [:div#pageWrapper
@@ -90,13 +104,12 @@
         [:div.container
           [:div
             [:button.u-pull-right.btn-5a8ac.button-primary
-              {:on-click #(log %)}
+              {:on-click #(handle-on-click %)}
               "Format"]
             [:div.instructions-b15d3
               (str "Paste " ((rum/react *style) style-map)) ":"]]
           (code-editor (rum/react *style))]]
       (footer)]))
-
 
 (defn main-page []
   (rum/mount (page-contents) (.getElementById js/document "bodyWrapper")))
