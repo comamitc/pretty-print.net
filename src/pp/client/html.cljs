@@ -51,17 +51,51 @@
 (rum/defc code-editor < code-editor-mixin [style]
   [:div.editor-40af1 {:id "code-editor"}])
 
+(def pp-license-url
+  "https://github.com/comamitc/pretty-print.net/blob/master/LICENSE.md")
+(def github-url "https://github.com/comamitc/pretty-print.net")
+(def issues-url "https://github.com/comamitc/pretty-print.net/issues")
+(def docs-url "http://pretty-print.net/#/about")
+
+(rum/defc footer-docs-list < rum/static []
+   [:div.col-ace4b
+     [:ul
+       ; [:li [:a.ftr-link-67c8e {:href docs-url} "Rationale"]]
+       [:li [:a.ftr-link-67c8e {:href github-url} "GitHub"]]
+       [:li [:a.ftr-link-67c8e {:href issues-url} "Issues"]]]])
+
+(rum/defc footer-bottom < rum/static []
+   [:div.bottom-31b43
+     [:div.left-1764b
+       [:p.small-14fbc
+         "pretty-print.net is released under the "
+         [:a {:href pp-license-url} "MIT License"] "."]]
+     [:div.right-e461e
+       [:a.ftr-home-link-2c3b4 {:href "/"} "pretty-print"
+         [:span.ftr-info-a5716 ".net"]]]
+     [:div.clr-43e49]])
+
+(rum/defc footer < rum/static []
+   [:div.ftr-outer-6bcd3
+     [:div.container
+       (footer-docs-list)
+       [:div.clr-43e49]
+       (footer-bottom)]])
+
 (rum/defc page-contents < rum/reactive []
   (let [*style (rum/cursor state :style)]
-    [:div
+    [:div#pageWrapper
       [:div.body-outer-7cb5e
         (nav-bar)
         [:div.container
           [:div
-            [:button.u-pull-right.btn-5a8ac.button-primary "Format"]
+            [:button.u-pull-right.btn-5a8ac.button-primary
+              {:on-click #(log %)}
+              "Format"]
             [:div.instructions-b15d3
               (str "Paste " ((rum/react *style) style-map)) ":"]]
-          (code-editor (rum/react *style))]]]))
+          (code-editor (rum/react *style))]]
+      (footer)]))
 
 
 (defn main-page []

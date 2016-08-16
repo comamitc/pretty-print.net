@@ -92,6 +92,10 @@ body {
   background-color: #222;
 }
 
+.CodeMirror {
+  height: 500px !important;
+}
+
 //
 // .body-f39e6 {
 //   .box-sizing();
@@ -117,11 +121,11 @@ body {
 }
 
 .btn-5a8ac {
-  // background-color: darken(#96CA4B, 10%);
-  // color: #eee;
+  font-weight: 400;
+  letter-spacing: 2px;
   vertical-align: middle;
   margin-bottom: 0;
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   display: block;
 }
 // .body-inner-5a8ac {
@@ -131,23 +135,23 @@ body {
 //   width: 90%;
 //   height: 589px;
 // }
-// .ftr-outer-6bcd3 {
-//   background: #222;
-// }
-// .ftr-inner-557c9 {
-//   color: #fff;
-//   margin: 0 auto;
-//   width: 1200px;
-// }
-// .clr-217e3 {
-//   clear: both;
-// }
-// .left-9467a {
-//   float: left;
-// }
-// .right-1dd94 {
-//   float: right;
-// }
+.ftr-outer-6bcd3 {
+  background: #222;
+}
+.ftr-inner-557c9 {
+  color: #fff;
+  margin: 0 auto;
+  width: 1200px;
+}
+.clr-217e3 {
+  clear: both;
+}
+.left-9467a {
+  float: left;
+}
+.right-1dd94 {
+  float: right;
+}
 .home-link-e4c1e {
   color: #222;
   .font-bold(28px);
@@ -205,21 +209,21 @@ body {
 // .faqs-inner-e9036 {
 //   margin: 0 auto;
 // }
-// .col-ace4b {
-//   .box-sizing();
-//   float: left;
-//   width: 100%;
-//   ul {
-//     list-style: none;
-//     margin: 0;
-//     margin-top: 25px;
-//     padding: 0;
-//     li {
-//       display: inline-block;
-//       margin-right: 75px;
-//     }
-//   }
-// }
+.col-ace4b {
+  .box-sizing();
+  float: left;
+  width: 100%;
+  ul {
+    list-style: none;
+    margin: 0;
+    margin-top: 25px;
+    padding: 0;
+    li {
+      display: inline-block;
+      margin-right: 75px;
+    }
+  }
+}
 // .hdr-856fa {
 //   color: #fff;
 //   .font-bold(14px);
@@ -227,68 +231,68 @@ body {
 //   padding: 0;
 //   text-transform: uppercase;
 // }
-// .ftr-link-67c8e {
-//   color: #aaa;
-//   display: inline-block;
-//   font-size: 14px;
-//   margin: 2px 0;
-//   padding: 0;
-//   text-decoration: none;
-//   .fa {
-//     margin-left: 5px;
-//   }
-// }
-// .ftr-link-67c8e:hover {
-//   text-decoration: underline;
-// }
-// .bottom-31b43 {
-//   padding: 20px 0 40px 0;
-// }
-// .small-14fbc {
-//   color: @footerBottomTextColor;
-//   font-size: 12px;
-//   margin: 0;
-//   padding: 15px 0 5px 0;
-//   a {
-//     color: @cljLogoLightBlueHalf;
-//     text-decoration: none;
-//   }
-//   a:hover {
-//     text-decoration: underline;
-//   }
-// }
-// .clr-43e49 {
-//   clear: both;
-// }
-// @footerBottomTextColor: #666;
-// .ftr-home-link-2c3b4 {
-//   color: @footerBottomTextColor;
-//   display: inline-block;
-//   .font-bold(28px);
-//   text-decoration: none;
-// }
-// .info-9c06a {
-//   color: #fff;
-//   .font-light(18px);
-//   text-transform: lowercase;
-// }
-// .ftr-info-a5716 {
-//   color: @footerBottomTextColor;
-//   .font-light(18px);
-//   text-transform: lowercase;
-// }
-// .ftr-home-link-2c3b4:hover {
-//   color: #aaa;
-//   .ftr-info-a5716 {
-//     color: #aaa;
-//   }
-// }
-// .left-1764b {
-//   float: left;
-// }
-// .right-e461e {
-//   float: right;
-// }
+.ftr-link-67c8e {
+  color: #aaa;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 0;
+  padding: 0;
+  text-decoration: none;
+  .fa {
+    margin-left: 5px;
+  }
+}
+.ftr-link-67c8e:hover {
+  text-decoration: underline;
+}
+.bottom-31b43 {
+  padding: 20px 0 40px 0;
+}
+.small-14fbc {
+  color: @footerBottomTextColor;
+  font-size: 12px;
+  margin: 0;
+  padding: 15px 0 5px 0;
+  a {
+    color: #33C3F0;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+.clr-43e49 {
+  clear: both;
+}
+@footerBottomTextColor: #666;
+.ftr-home-link-2c3b4 {
+  color: @footerBottomTextColor;
+  display: inline-block;
+  .font-bold(28px);
+  text-decoration: none;
+}
+.info-9c06a {
+  color: #fff;
+  .font-light(18px);
+  text-transform: lowercase;
+}
+.ftr-info-a5716 {
+  color: @footerBottomTextColor;
+  .font-light(18px);
+  text-transform: lowercase;
+}
+.ftr-home-link-2c3b4:hover {
+  color: #aaa;
+  .ftr-info-a5716 {
+    color: #aaa;
+  }
+}
+.left-1764b {
+  float: left;
+}
+.right-e461e {
+  float: right;
+}
 // .error-disp-7c4aa {
 //   margin-top: 20px;
 //   color: #d95c5c;
