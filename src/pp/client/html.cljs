@@ -32,4 +32,3 @@
 
 (defn main-page []
   (rum/mount (page-contents) (.getElementById js/document "bodyWrapper")))
->>>>>>> setup the start of RUM
