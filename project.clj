@@ -1,4 +1,4 @@
-(def project-version "0.2.0")
+(def project-version "0.3.0")
 
 (defproject pp project-version
 
@@ -59,18 +59,11 @@
                                                :output-dir "resources/public/js/out-min"
                                                :optimizations :advanced
                                                :closure-defines {pp.client.data/app-v ~project-version}
-                                               :pretty-print false}}
-                       :server {:source-paths ["src/pp/server"]
-                                :figwheel true
-                                :compiler {:main pp.server.main
-                                           :output-to "target/server/index.js"
-                                           :output-dir "target/server"
-                                           :target :nodejs
-                                           :optimizations :none
-                                           :source-map true}}}}
+                                               :pretty-print false}}}}
+
   :aliases {"dev" ["pdo" ["less" "auto"]
                    ["figwheel" "client"]]
             "prod" ["do"  ["clean"]
                     ["less" "once"]
                     ["minify-assets"]
-                    ["cljsbuild" "once" "client-min" "server"]]})
+                    ["cljsbuild" "once" "client-min"]]})

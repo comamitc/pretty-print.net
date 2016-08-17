@@ -51,7 +51,6 @@
                     (assoc state :cm (:cm old-state)))
    :did-mount style-update})
 
-
 (rum/defc code-editor < code-editor-mixin [style]
   [:div.editor-40af1 {:id "code-editor"}])
 
