@@ -1,7 +1,3 @@
-# copy default config file
-echo "copying config file..."
-cp ./config/config.example.json ./config/config.json
-
 echo "install npm dependencies..."
 lein npm install
 

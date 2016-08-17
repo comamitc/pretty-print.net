@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 @import "elements-0.9.less";
 @import "normalize-3.0.2.less";
-@import "font-awesome-4.2.0.less";
+@import (inline) "skeleton.css";
 //------------------------------------------------------------------------------
 // Fonts
 //------------------------------------------------------------------------------
@@ -92,36 +92,53 @@ body {
   background-color: #222;
 }
 
-.body-f39e6 {
-  .box-sizing();
-  font-family: "Open Sans";
+.CodeMirror {
+  height: 500px !important;
 }
-.header-outer-c5e7d {
-  background: @headerColor;
-  padding: 15px 0;
-}
-.header-inner-0f889 {
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 20px;
+
+//
+// .body-f39e6 {
+//   .box-sizing();
+//   font-family: "Open Sans";
+// }
+// .header-outer-c5e7d {
+//   background: @headerColor;
+//   padding: 15px 0;
+// }
+.header-0f889 {
+  min-height: 60px;
+  margin-bottom: 30px;
+  padding-top: 5px;
+  box-shadow: 2px 2px 2px #bbb;
 }
 .body-outer-7cb5e {
   background: #eee;
-  padding-bottom: 40px;
 }
-.body-inner-40af1 {
-  margin: 0 auto;
-  padding: 30px 0;
-  max-width: 980px;
-  width: 90%;
+
+.editor-40af1 {
+
+  border: 1px solid #ddd;
 }
-.body-inner-5a8ac {
-  margin: 0 auto;
-  padding: 30px 0;
-  max-width: 980px;
-  width: 90%;
-  height: 589px;
+
+.workspace-ca07e {
+  margin-bottom: 70px;
 }
+
+.btn-5a8ac {
+  font-weight: 400;
+  letter-spacing: 2px;
+  vertical-align: middle;
+  margin-bottom: 0;
+  margin-top: 0.7rem;
+  display: block;
+}
+// .body-inner-5a8ac {
+//   margin: 0 auto;
+//   padding: 30px 0;
+//   max-width: 980px;
+//   width: 90%;
+//   height: 589px;
+// }
 .ftr-outer-6bcd3 {
   background: #222;
 }
@@ -140,64 +157,60 @@ body {
   float: right;
 }
 .home-link-e4c1e {
-  color: #fff;
+  color: #222;
   .font-bold(28px);
   text-decoration: none;
+  &:hover {
+    color: #666;
+  }
 }
 .net-84e9a {
   .font-light(22px);
   text-transform: lowercase;
 }
 .big-select-51b29 {
-  font-size: 18px;
-  padding: 5px 10px;
   margin-top: 8px;
 }
-.text-f3988 {
-  height: 500px;
-  width: 100%;
-  font-family: monospace;
-}
+// .text-f3988 {
+//   height: 500px;
+//   width: 100%;
+//   font-family: monospace;
+// }
 .instructions-b15d3 {
-  .font-light(36px);
-  margin: 15px 0;
-  padding: 0;
-  .fa {
-    font-size: 28px;
-    margin-left: 12px;
-  }
+  .font-light(32px);
+  padding-bottom: 1rem;
 }
-.left-body-ca07e {
-  float: left;
-  max-width: 720px;
-  width: 100%;
-}
-.right-body-caf9a {
-  float: right;
-  max-width: 200px;
-  width: 100%;
-  height: 506px;
-}
-.btn-2d976 {
-  background: @inputColor;
-  border: 1px solid darken(@inputColor, 5%);
-  color: #fff;
-  .font-normal(24px);
-  padding: 8px 16px;
-  .rounded(4px);
-  width: 100%;
-  letter-spacing: 1px;
-  &:hover {
-    cursor: pointer;
-    background: darken(@inputColor, 5%);
-  }
-}
-.faqs-outer-dac3a {
-  background: rgba(90, 131, 213, 0.75);
-}
-.faqs-inner-e9036 {
-  margin: 0 auto;
-}
+// .left-body-ca07e {
+//   float: left;
+//   max-width: 720px;
+//   width: 100%;
+// }
+// .right-body-caf9a {
+//   float: right;
+//   max-width: 200px;
+//   width: 100%;
+//   height: 506px;
+// }
+// .btn-2d976 {
+//   background: @inputColor;
+//   border: 1px solid darken(@inputColor, 5%);
+//   color: #fff;
+//   .font-normal(24px);
+//   padding: 8px 16px;
+//   .rounded(4px);
+//   width: 100%;
+//   letter-spacing: 1px;
+//   &:hover {
+//     cursor: pointer;
+//     background: darken(@inputColor, 5%);
+//   }
+// }
+// .faqs-outer-dac3a {
+//   background: rgba(90, 131, 213, 0.75);
+// }
+// .faqs-inner-e9036 {
+//   margin: 0 auto;
+// }
 .col-ace4b {
   .box-sizing();
   float: left;
@@ -213,13 +226,13 @@ body {
     }
   }
 }
-.hdr-856fa {
-  color: #fff;
-  .font-bold(14px);
-  margin: 30px 0 10px 0;
-  padding: 0;
-  text-transform: uppercase;
-}
+// .hdr-856fa {
+//   color: #fff;
+//   .font-bold(14px);
+//   margin: 30px 0 10px 0;
+//   padding: 0;
+//   text-transform: uppercase;
+// }
 .ftr-link-67c8e {
   color: #aaa;
   display: inline-block;
@@ -243,7 +256,7 @@ body {
   margin: 0;
   padding: 15px 0 5px 0;
   a {
-    color: @cljLogoLightBlueHalf;
+    color: #33C3F0;
     text-decoration: none;
   }
   a:hover {
@@ -289,241 +302,237 @@ body {
   border-radius: .2857rem;
   border: 1px solid #d95c5c;
   padding: 0.9em 1.5em;
-  > div {
-    padding: 3px;
-    font-size: 12px;
-  }
 }
-.err-ttl-0867b {
-  margin-left: 6px;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: bold;
-}
-.msg-6f5ee {
-  margin-top: 5px;
-}
-.success-disp-3a51b {
-  margin-top: 20px;
-  color: #4F8A10;
-  background-color: #DFF2BF;
-  border-radius: .2857rem;
-  border: 1px solid #4F8A10;
-  padding: 0.9em 1.5em;
-}
-.success-ttl-390ee {
-  margin-left: 6px;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.text-block-d714f {
-  margin-top: 0;
-  margin-bottom: 16px;
-  .font-light(18px);
-  line-height: 1.6;
-}
-
-.settings-wrapper-751dc {
-  border: 1px solid @headerColor;
-  margin-bottom: 10px;
-  border-radius: 2px;
-  height: 68%;
-}
-
-.settings-hdr-fa6ca {
-
-  margin-top: -19px;
-  padding: 5px;
-  width: 75px;
-  margin-left: 10px;
-  text-align: center;
-  background-color: #eee;
-  .font-normal(18px);
-}
-
-.setting-e0ddb {
-  margin-top: 10px;
-}
-.format-action-7ac2a{
-  height: 40%;
-}
-.setting-label-abd34 {
-  .font-light(16px);
-  margin-left: 9%;
-  display: inline;
-}
-
-.range-input-0b991 {
-  width: 85%;
-  margin-top: 12px;
-  margin-left: 7.5%
-}
-
-.set-value-06ba3 {
-  color: #333;
-  .font-normal(16px);
-}
-
-@roundColor: #f0ad4e;
-
-/** http://tinyurl.com/lxfl8m3 */
-
-input[type=range]::-ms-track {
-    width: 300px;
-    height: 5px;
-
-    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-    background: transparent;
-
-    /*leave room for the larger thumb to overflow with a transparent border */
-    border-color: transparent;
-    border-width: 6px 0;
-
-    /*remove default tick marks*/
-    color: transparent;
-}
-
-input[type=range]::-ms-fill-lower {
-    background: #777;
-    border-radius: 10px;
-}
-input[type=range]::-ms-fill-upper {
-    background: #ddd;
-    border-radius: 10px;
-}
-input[type=range]::-ms-thumb {
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: @inputColor;
-}
-input[type=range]:focus::-ms-fill-lower {
-    background: #888;
-}
-input[type=range]:focus::-ms-fill-upper {
-    background: #ccc;
-}
-input[type=range]{
-    -webkit-appearance: none;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-    width: 400px;
-    height: 5px;
-    background: #ddd;
-    border: none;
-    border-radius: 3px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: @inputColor;
-    margin-top: -4px;
-}
-
-input[type=range]:focus {
-    outline: none;
-}
-
-input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ccc;
-}
-input[type=range]::-ms-track {
-    width: 300px;
-    height: 5px;
-
-    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
-    background: transparent;
-
-    /*leave room for the larger thumb to overflow with a transparent border */
-    border-color: transparent;
-    border-width: 6px 0;
-
-    /*remove default tick marks*/
-    color: transparent;
-}
-input[type=range]::-ms-fill-lower {
-    background: #777;
-    border-radius: 10px;
-}
-input[type=range]::-ms-fill-upper {
-    background: #ddd;
-    border-radius: 10px;
-}
-input[type=range]::-ms-thumb {
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: @inputColor;
-}
-input[type=range]:focus::-ms-fill-lower {
-    background: #888;
-}
-input[type=range]:focus::-ms-fill-upper {
-    background: #ccc;
-}
-.cmn-toggle {
-  display: inline-block;
-  position: absolute;
-  margin-left: -9999px;
-  visibility: hidden;
-}
-.cmn-toggle + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-}
-
-input.cmn-toggle-round-flat + label {
-  padding: 2px;
-  width: 60px;
-  height: 30px;
-  background-color: #dddddd;
-  border-radius: 30px;
-  transition: background 0.4s;
-}
-input.cmn-toggle-round-flat + label:before,
-input.cmn-toggle-round-flat + label:after {
-  display: block;
-  position: absolute;
-  content: "";
-}
-input.cmn-toggle-round-flat + label:before {
-  top: 2px;
-  left: 2px;
-  bottom: 2px;
-  right: 2px;
-  background-color: #fff;
-  border-radius: 30px;
-  transition: background 0.4s;
-}
-input.cmn-toggle-round-flat + label:after {
-  top: 4px;
-  left: 4px;
-  bottom: 4px;
-  width: 26px;
-  background-color: #dddddd;
-  border-radius: 52px;
-  transition: margin 0.4s, background 0.4s;
-}
-input.cmn-toggle-round-flat:checked + label {
-  background-color: @inputColor;
-}
-input.cmn-toggle-round-flat:checked + label:after {
-  margin-left: 30px;
-  background-color: @inputColor;
-}
-.label-f831f {
-  margin-left: 70%;
-  margin-top: -28px;
-}
+// .err-ttl-0867b {
+//   margin-left: 6px;
+//   display: inline-block;
+//   font-size: 15px;
+//   font-weight: bold;
+// }
+// .msg-6f5ee {
+//   margin-top: 5px;
+// }
+// .success-disp-3a51b {
+//   margin-top: 20px;
+//   color: #4F8A10;
+//   background-color: #DFF2BF;
+//   border-radius: .2857rem;
+//   border: 1px solid #4F8A10;
+//   padding: 0.9em 1.5em;
+// }
+// .success-ttl-390ee {
+//   margin-left: 6px;
+//   display: inline-block;
+//   font-size: 15px;
+//   font-weight: bold;
+// }
+//
+// .text-block-d714f {
+//   margin-top: 0;
+//   margin-bottom: 16px;
+//   .font-light(18px);
+//   line-height: 1.6;
+// }
+//
+// .settings-wrapper-751dc {
+//   border: 1px solid @headerColor;
+//   margin-bottom: 10px;
+//   border-radius: 2px;
+//   height: 68%;
+// }
+//
+// .settings-hdr-fa6ca {
+//
+//   margin-top: -19px;
+//   padding: 5px;
+//   width: 75px;
+//   margin-left: 10px;
+//   text-align: center;
+//   background-color: #eee;
+//   .font-normal(18px);
+// }
+//
+// .setting-e0ddb {
+//   margin-top: 10px;
+// }
+// .format-action-7ac2a{
+//   height: 40%;
+// }
+// .setting-label-abd34 {
+//   .font-light(16px);
+//   margin-left: 9%;
+//   display: inline;
+// }
+//
+// .range-input-0b991 {
+//   width: 85%;
+//   margin-top: 12px;
+//   margin-left: 7.5%
+// }
+//
+// .set-value-06ba3 {
+//   color: #333;
+//   .font-normal(16px);
+// }
+//
+// @roundColor: #f0ad4e;
+//
+// /** http://tinyurl.com/lxfl8m3 */
+//
+// input[type=range]::-ms-track {
+//     width: 300px;
+//     height: 5px;
+//
+//     /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+//     background: transparent;
+//
+//     /*leave room for the larger thumb to overflow with a transparent border */
+//     border-color: transparent;
+//     border-width: 6px 0;
+//
+//     /*remove default tick marks*/
+//     color: transparent;
+// }
+//
+// input[type=range]::-ms-fill-lower {
+//     background: #777;
+//     border-radius: 10px;
+// }
+// input[type=range]::-ms-fill-upper {
+//     background: #ddd;
+//     border-radius: 10px;
+// }
+// input[type=range]::-ms-thumb {
+//     border: none;
+//     height: 16px;
+//     width: 16px;
+//     border-radius: 50%;
+//     background: @inputColor;
+// }
+// input[type=range]:focus::-ms-fill-lower {
+//     background: #888;
+// }
+// input[type=range]:focus::-ms-fill-upper {
+//     background: #ccc;
+// }
+// input[type=range]{
+//     -webkit-appearance: none;
+// }
+//
+// input[type=range]::-webkit-slider-runnable-track {
+//     width: 400px;
+//     height: 5px;
+//     background: #ddd;
+//     border: none;
+//     border-radius: 3px;
+// }
+//
+// input[type=range]::-webkit-slider-thumb {
+//     -webkit-appearance: none;
+//     border: none;
+//     height: 16px;
+//     width: 16px;
+//     border-radius: 50%;
+//     background: @inputColor;
+//     margin-top: -4px;
+// }
+//
+// input[type=range]:focus {
+//     outline: none;
+// }
+//
+// input[type=range]:focus::-webkit-slider-runnable-track {
+//     background: #ccc;
+// }
+// input[type=range]::-ms-track {
+//     width: 300px;
+//     height: 5px;
+//
+//     /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+//     background: transparent;
+//
+//     /*leave room for the larger thumb to overflow with a transparent border */
+//     border-color: transparent;
+//     border-width: 6px 0;
+//
+//     /*remove default tick marks*/
+//     color: transparent;
+// }
+// input[type=range]::-ms-fill-lower {
+//     background: #777;
+//     border-radius: 10px;
+// }
+// input[type=range]::-ms-fill-upper {
+//     background: #ddd;
+//     border-radius: 10px;
+// }
+// input[type=range]::-ms-thumb {
+//     border: none;
+//     height: 16px;
+//     width: 16px;
+//     border-radius: 50%;
+//     background: @inputColor;
+// }
+// input[type=range]:focus::-ms-fill-lower {
+//     background: #888;
+// }
+// input[type=range]:focus::-ms-fill-upper {
+//     background: #ccc;
+// }
+// .cmn-toggle {
+//   display: inline-block;
+//   position: absolute;
+//   margin-left: -9999px;
+//   visibility: hidden;
+// }
+// .cmn-toggle + label {
+//   display: block;
+//   position: relative;
+//   cursor: pointer;
+//   outline: none;
+//   user-select: none;
+// }
+//
+// input.cmn-toggle-round-flat + label {
+//   padding: 2px;
+//   width: 60px;
+//   height: 30px;
+//   background-color: #dddddd;
+//   border-radius: 30px;
+//   transition: background 0.4s;
+// }
+// input.cmn-toggle-round-flat + label:before,
+// input.cmn-toggle-round-flat + label:after {
+//   display: block;
+//   position: absolute;
+//   content: "";
+// }
+// input.cmn-toggle-round-flat + label:before {
+//   top: 2px;
+//   left: 2px;
+//   bottom: 2px;
+//   right: 2px;
+//   background-color: #fff;
+//   border-radius: 30px;
+//   transition: background 0.4s;
+// }
+// input.cmn-toggle-round-flat + label:after {
+//   top: 4px;
+//   left: 4px;
+//   bottom: 4px;
+//   width: 26px;
+//   background-color: #dddddd;
+//   border-radius: 52px;
+//   transition: margin 0.4s, background 0.4s;
+// }
+// input.cmn-toggle-round-flat:checked + label {
+//   background-color: @inputColor;
+// }
+// input.cmn-toggle-round-flat:checked + label:after {
+//   margin-left: 30px;
+//   background-color: @inputColor;
+// }
+// .label-f831f {
+//   margin-left: 70%;
+//   margin-top: -28px;
+// }
