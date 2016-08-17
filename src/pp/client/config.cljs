@@ -1,4 +1,4 @@
-(ns pp.client.config)
+(ns ^:figwheel-no-load pp.client.config)
 
 (def style-map
   {:clj  "Clojure"
