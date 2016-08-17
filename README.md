@@ -1,5 +1,7 @@
 # pretty-print.net
 
+An Online Clojure/EDN & more pretty printer.
+
 [![Codeship Status](https://codeship.com/projects/8d600b00-a35d-0133-0ef4-1ac8bff03ae9/status?branch=master
 )](https://www.codeship.io/projects/129215)
 
@@ -13,3 +15,13 @@ Clojure core comes with clojure.pprint - which is a library to format Clojure co
 As of January 2015, there are numerous online services to pretty print various data interchange formats (JSON, YAML, XML, etc), but there is no online service for printing an EDN string.
 
 This project aims to build such a service and improve the usability of working with EDN data.
+
+## Development Workflow
+
+```sh
+$> lein clean && lein dev
+```
+
+## Deployment Workflow
+
+When branches are merged into `master`, it is built and deployed with [Codeship](https://codeship.com/).
