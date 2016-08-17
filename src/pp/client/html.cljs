@@ -7,7 +7,8 @@
             [pp.client.format :refer [format-input!]]
             [cljsjs.codemirror]
             [cljsjs.codemirror.mode.clojure]
-            [cljsjs.codemirror.mode.javascript]))
+            [cljsjs.codemirror.mode.javascript]
+            [cljsjs.clipboard]))
 
 ;;------------------------------------------------------------------------------
 ;; Actions
@@ -46,6 +47,13 @@
     ;; stupid hack because args are being treated "weird"
     (swap! state assoc :cm @cm)
     (assoc st :cm @cm)))
+
+;; clipboard data
+(rum/defc clipboard-data < rum/reactive []
+  (let [*value (rum/cursor state :value)]
+    [:button.u-pull-right.btn-2d976
+      {:data-clipboard-text (or (rum/react *value) " ") :id "clipboard-data"}
+      [:img {:src "img/clippy.svg" :width 13}]]))
 
 ;;------------------------------------------------------------------------------
 ;; Code Editor
@@ -121,11 +129,14 @@
         (nav-bar)
         [:div.container
           [:div
-            [:button.u-pull-right.btn-5a8ac.button-primary
-              {:on-click #(handle-on-click %)}
-              "Format"]
+            [:span
+              [:button.u-pull-right.btn-5a8ac.button-primary
+                {:on-click #(handle-on-click %)}
+                "Format"]
+              (clipboard-data)]
             [:div.instructions-b15d3
               (str "Paste " ((rum/react *style) style-map)) ":"]]
+
           [:div.workspace-ca07e
             (code-editor (rum/react *style))
             (when (rum/react *error?)
@@ -136,4 +147,5 @@
 ;; DOM mount
 ;;------------------------------------------------------------------------------
 (defn main-page []
-  (rum/mount (page-contents) (.getElementById js/document "bodyWrapper")))
+  (rum/mount (page-contents) (.getElementById js/document "bodyWrapper"))
+  (js/Clipboard. "#clipboard-data"))
