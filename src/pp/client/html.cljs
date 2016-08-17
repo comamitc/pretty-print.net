@@ -1,5 +1,4 @@
 (ns pp.client.html
-  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [rum.core :as rum]
             [clojure.string :as s]
             [pp.client.util :refer [js-log log]]
@@ -10,22 +9,19 @@
             [cljsjs.codemirror.mode.clojure]
             [cljsjs.codemirror.mode.javascript]))
 
-(rum/defc nav-bar < rum/reactive []
-  (let [*style (rum/cursor state :style)]
-    [:div.header-0f889
-      [:div.container
-        [:a.home-link-e4c1e {:href "" :class "nine columns"} "pretty-print"
-          [:span.net-84e9a ".net"]]
-        [:select.big-select-51b29
-          {:class "three columns"
-           :default-value (name (rum/react *style))
-           :on-change #(reset! *style (keyword (-> % .-target .-value)))}
-          (for [kv style-map]
-            [:option {:key   (first kv)
-                      :value (name (first kv))}
-              (second kv)])]]]))
+;;------------------------------------------------------------------------------
+;; Actions
+;;------------------------------------------------------------------------------
+(defn- handle-on-click [evt]
+  (let [d-state @state
+        *style (:style d-state)
+        *value (:value d-state)
+        *cm    (:cm d-state)
+        out    (format-input! *style *value)]
+     (if (contains? out :result)
+       (.setValue *cm (:result out))
+       (swap! state assoc :error? (:error out)))))
 
-;; TODO: something isn't working here
 (defn- handle-on-change [cm _]
   (let [*cm    (:cm @state)
         v      (.getValue cm)]
@@ -46,6 +42,9 @@
     ;; stupid hack because args are being treated "weird"
     (assoc st :cm @cm)))
 
+;;------------------------------------------------------------------------------
+;; Code Editor
+;;------------------------------------------------------------------------------
 (def code-editor-mixin
   {:did-update style-update
    :transfer-state (fn [old-state state]
@@ -56,6 +55,9 @@
 (rum/defc code-editor < code-editor-mixin [style]
   [:div.editor-40af1 {:id "code-editor"}])
 
+;;------------------------------------------------------------------------------
+;; Footer
+;;------------------------------------------------------------------------------
 (def pp-license-url
   "https://github.com/comamitc/pretty-print.net/blob/master/LICENSE.md")
 (def github-url "https://github.com/comamitc/pretty-print.net")
@@ -87,16 +89,27 @@
        [:div.clr-43e49]
        (footer-bottom)]])
 
-(defn- handle-on-click [evt]
-  (let [d-state @state
-        *style (:style d-state)
-        *value (:value d-state)
-        *cm    (:cm d-state)
-        out    (format-input! *style *value)]
-     (if (contains? out :result)
-       (.setValue *cm (:result out))
-       (swap! state assoc :error? (:error out)))))
+;;------------------------------------------------------------------------------
+;; NavBar
+;;------------------------------------------------------------------------------
+(rum/defc nav-bar < rum/reactive []
+ (let [*style (rum/cursor state :style)]
+   [:div.header-0f889
+     [:div.container
+       [:a.home-link-e4c1e {:href "" :class "nine columns"} "pretty-print"
+         [:span.net-84e9a ".net"]]
+       [:select.big-select-51b29
+         {:class "three columns"
+          :default-value (name (rum/react *style))
+          :on-change #(reset! *style (keyword (-> % .-target .-value)))}
+         (for [kv style-map]
+           [:option {:key   (first kv)
+                     :value (name (first kv))}
+             (second kv)])]]]))
 
+;;------------------------------------------------------------------------------
+;; Main Page Contents
+;;------------------------------------------------------------------------------
 (rum/defc page-contents < rum/reactive []
   (let [*style (rum/cursor state :style)
         *error? (rum/cursor state :error?)]
@@ -116,5 +129,8 @@
               [:div.error-disp-7c4aa (str (rum/react *error?))])]]]
       (footer)]))
 
+;;------------------------------------------------------------------------------
+;; DOM mount
+;;------------------------------------------------------------------------------
 (defn main-page []
   (rum/mount (page-contents) (.getElementById js/document "bodyWrapper")))
