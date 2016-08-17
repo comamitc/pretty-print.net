@@ -95,10 +95,10 @@
  (let [*style (rum/cursor state :style)]
    [:div.header-0f889
      [:div.container
-       [:a.home-link-e4c1e {:href "" :class "nine columns"} "pretty-print"
+       [:a.home-link-e4c1e {:href "" :class "two-thirds column"} "pretty-print"
          [:span.net-84e9a ".net"]]
        [:select.big-select-51b29
-         {:class "three columns"
+         {:class "one-third column"
           :default-value (name (rum/react *style))
           :on-change #(reset! *style (keyword (-> % .-target .-value)))}
          (for [kv style-map]

@@ -5,8 +5,6 @@
   :description "A Clojure(Script) Pretty Printer"
   :url "http://pretty-print.net/"
 
-  :jvm-opts ["-Xmx384m"]
-
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.228"]
                  [cljfmt "0.5.3"]
