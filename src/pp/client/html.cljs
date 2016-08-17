@@ -25,13 +25,13 @@
                       :value (name (first kv))}
               (second kv)])]]]))
 
+;; TODO: something isn't working here
 (defn- handle-on-change [cm _]
-  (let [*value (rum/cursor state :value)
-        *cm    (:cm @state)
+  (let [*cm    (:cm @state)
         v      (.getValue cm)]
-    (when-not *cm
+    (when (nil? *cm)
       (swap! state assoc :cm cm))
-    (reset! *value v)))
+    (swap! state assoc :value v :error? nil)))
 
 (def mode-map {:clj "clojure" :edn "clojure" :json "javascript"})
 
@@ -93,11 +93,13 @@
         *value (:value d-state)
         *cm    (:cm d-state)
         out    (format-input! *style *value)]
-     (when (contains? out :result)
-       (.setValue *cm (:result out)))))
+     (if (contains? out :result)
+       (.setValue *cm (:result out))
+       (swap! state assoc :error? (:error out)))))
 
 (rum/defc page-contents < rum/reactive []
-  (let [*style (rum/cursor state :style)]
+  (let [*style (rum/cursor state :style)
+        *error? (rum/cursor state :error?)]
     [:div#pageWrapper
       [:div.body-outer-7cb5e
         (nav-bar)
@@ -108,7 +110,10 @@
               "Format"]
             [:div.instructions-b15d3
               (str "Paste " ((rum/react *style) style-map)) ":"]]
-          (code-editor (rum/react *style))]]
+          [:div.workspace-ca07e
+            (code-editor (rum/react *style))
+            (when (rum/react *error?)
+              [:div.error-disp-7c4aa (str (rum/react *error?))])]]]
       (footer)]))
 
 (defn main-page []
