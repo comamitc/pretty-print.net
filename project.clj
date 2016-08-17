@@ -1,4 +1,4 @@
-(def project-version "0.3.0")
+(def project-version "0.3.2")
 
 (defproject pp project-version
 

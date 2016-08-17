@@ -33,13 +33,18 @@
 
 (defn style-update [st]
   (let [style (first (:rum/args st))
-        cm    (atom (:cm st))]
+        cm    (atom (:cm st))
+        v     (:value @state)]
     (when-not @cm
       (reset! cm (js/CodeMirror. (by-id "code-editor")
                                  #js {:lineNumbers true}))
       (.on @cm "change" handle-on-change))
     (.setOption @cm "mode" (style mode-map))
+    ;; maintain values when component is un-mounted and re-mounted
+    (when v
+      (.setValue @cm v))
     ;; stupid hack because args are being treated "weird"
+    (swap! state assoc :cm @cm)
     (assoc st :cm @cm)))
 
 ;;------------------------------------------------------------------------------
@@ -66,7 +71,6 @@
 (rum/defc footer-docs-list < rum/static []
    [:div.col-ace4b
      [:ul
-       ; [:li [:a.ftr-link-67c8e {:href docs-url} "Rationale"]]
        [:li [:a.ftr-link-67c8e {:href github-url} "GitHub"]]
        [:li [:a.ftr-link-67c8e {:href issues-url} "Issues"]]]])
 
