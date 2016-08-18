@@ -26,7 +26,6 @@
                :miser-width         120
                :dispatch            p/simple-dispatch)))
 
-
 (def format-edn (comp reformat-string
                       pp-str
                       #(.-text %)

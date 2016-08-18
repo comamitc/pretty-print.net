@@ -5,10 +5,12 @@
             [pp.client.dom :refer [by-id]]
             [pp.client.config :refer [state style-map]]
             [pp.client.format :refer [format-input!]]
+            [goog.dom :as dom]
             [cljsjs.codemirror]
             [cljsjs.codemirror.mode.clojure]
             [cljsjs.codemirror.mode.javascript]
-            [cljsjs.clipboard]))
+            [cljsjs.clipboard]
+            [cljsjs.highlight]))
 
 ;;------------------------------------------------------------------------------
 ;; Actions
@@ -20,7 +22,15 @@
         *cm    (:cm d-state)
         out    (format-input! *style *value)]
      (if (contains? out :result)
-       (.setValue *cm (:result out))
+       (let [result (:result out)]
+         (reset! state
+                 (update-in d-state
+                            [:history]
+                            conj
+                            {:date  (.toLocaleString (js/Date.))
+                             :style *style
+                             :value result}))
+         (.setValue *cm result))
        (swap! state assoc :error? (:error out)))))
 
 (defn- handle-on-change [cm _]
@@ -66,6 +76,42 @@
 
 (rum/defc code-editor < code-editor-mixin [style]
   [:div.editor-40af1 {:id "code-editor"}])
+
+;;------------------------------------------------------------------------------
+;; History
+;;------------------------------------------------------------------------------
+(extend-type js/HTMLCollection
+    ISeqable
+    (-seq [node-list] (array-seq node-list)))
+
+(defn- did-render [state]
+  (let [nodes (.getElementsByTagName js/document "code")]
+    (doseq [n nodes]
+      (do
+        (.highlightBlock js/hljs n)))
+    state))
+
+(rum/defcs history-panel < rum/reactive
+                           {:did-update did-render
+                            :did-mount did-render}
+  []
+  (let [*history (rum/cursor state :history)]
+    (log *history)
+    (when (not-empty (rum/react *history))
+      [:div
+        [:div.container.header-row-6f5ee
+          [:div.three.columns "Date"]
+          [:div.three.columns "Style"]
+          [:div.six.columns "Value"]]
+        [:div.container.hist-fa6ca
+          (for [n (take 10 (reverse (rum/react *history)))]
+            [:a.data-row-3a51b {:href "" :on-click #(.preventDefault %)}
+              [:div.three.columns (:date n)]
+              [:div.three.columns ((:style n) style-map)]
+              [:div.six.columns
+                [:pre
+                  [:code {:class ((:style n) mode-map)}
+                    (subs (:value n) 0 50)]]]])]])))
 
 ;;------------------------------------------------------------------------------
 ;; Footer
@@ -138,9 +184,11 @@
               (str "Paste " ((rum/react *style) style-map)) ":"]]
 
           [:div.workspace-ca07e
-            (code-editor (rum/react *style))
             (when (rum/react *error?)
-              [:div.error-disp-7c4aa (str (rum/react *error?))])]]]
+              [:div.error-disp-7c4aa (str (rum/react *error?))])
+            (code-editor (rum/react *style))]]
+        (history-panel)]
+
       (footer)]))
 
 ;;------------------------------------------------------------------------------

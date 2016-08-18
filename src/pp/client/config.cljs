@@ -5,4 +5,11 @@
    :edn  "EDN"
    :json "JavaScript"})
 
-(def state (atom {:success? false :error? false :value nil :style :edn :cm nil}))
+(def state
+ (atom
+  {:value    nil
+   :history  []
+   :style    :edn
+   :cm       nil
+   :error?   false
+   :success? false}))
