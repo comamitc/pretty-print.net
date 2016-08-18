@@ -13,7 +13,8 @@
                  [cljsjs/codemirror "5.11.0-2"]
                  [org.clojure/core.async "0.2.385"]
                  [cljsjs/parinfer "1.8.1-0"]
-                 [cljsjs/js-beautify "1.6.2-0"]]
+                 [cljsjs/js-beautify "1.6.2-0"]
+                 [cljsjs/clipboard "1.5.9-0"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-npm "0.6.2"]
