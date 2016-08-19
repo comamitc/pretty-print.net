@@ -5,6 +5,7 @@
             [pp.client.dom :refer [by-id]]
             [pp.client.config :refer [state style-map]]
             [pp.client.format :refer [format-input!]]
+            [pp.client.data :refer [set-localstorage!]]
             [goog.dom :as dom]
             [cljsjs.codemirror]
             [cljsjs.codemirror.mode.clojure]
@@ -15,24 +16,30 @@
 ;;------------------------------------------------------------------------------
 ;; Actions
 ;;------------------------------------------------------------------------------
+
+;; Format Action
 (defn- handle-on-click [evt]
   (let [d-state @state
         *style (:style d-state)
         *value (:value d-state)
         *cm    (:cm d-state)
         out    (format-input! *style *value)]
+     (log (:history @state))
      (if (contains? out :result)
        (let [result (:result out)]
-         (reset! state
-                 (update-in d-state
-                            [:history]
-                            conj
-                            {:date  (.toLocaleString (js/Date.))
-                             :style *style
-                             :value result}))
+         ;; update state object
+         (swap! state assoc :history (cons {:date  (.toLocaleString (js/Date.))
+                                            :style *style
+                                            :value result} (take 9 (:history @state))))
+
+         ;; save last 10 history to localStorage
+         (set-localstorage! :history (:history @state))
+
+         ;; attach new formatted output to CodeMirror
          (.setValue *cm result))
        (swap! state assoc :error? (:error out)))))
 
+;; CodeMirror Value Change
 (defn- handle-on-change [cm _]
   (let [*cm    (:cm @state)
         v      (.getValue cm)]
@@ -42,6 +49,7 @@
 
 (def mode-map {:clj "clojure" :edn "clojure" :json "javascript"})
 
+;; style select toggled to new value
 (defn style-update [st]
   (let [style (first (:rum/args st))
         cm    (atom (:cm st))
@@ -58,7 +66,9 @@
     (swap! state assoc :cm @cm)
     (assoc st :cm @cm)))
 
-;; clipboard data
+;;------------------------------------------------------------------------------
+;; Clipboard Data
+;;------------------------------------------------------------------------------
 (rum/defc clipboard-data < rum/reactive []
   (let [*value (rum/cursor state :value)]
     [:button.u-pull-right.btn-2d976
@@ -80,23 +90,28 @@
 ;;------------------------------------------------------------------------------
 ;; History
 ;;------------------------------------------------------------------------------
+
+;; Need to extend native DOM types
 (extend-type js/HTMLCollection
     ISeqable
     (-seq [node-list] (array-seq node-list)))
 
+;; helper function for Rum mixin
 (defn- did-render [state]
   (let [nodes (.getElementsByTagName js/document "code")]
+    (log "something")
     (doseq [n nodes]
       (do
         (.highlightBlock js/hljs n)))
     state))
 
+;; Markup
 (rum/defcs history-panel < rum/reactive
                            {:did-update did-render
+                            :after-render did-render
                             :did-mount did-render}
   []
   (let [*history (rum/cursor state :history)]
-    (log *history)
     (when (not-empty (rum/react *history))
       [:div
         [:div.container.header-row-6f5ee
@@ -104,7 +119,7 @@
           [:div.three.columns "Style"]
           [:div.six.columns "Value"]]
         [:div.container.hist-fa6ca
-          (for [n (take 10 (reverse (rum/react *history)))]
+          (for [n (rum/react *history)]
             [:a.data-row-3a51b {:href "" :on-click #(.preventDefault %)}
               [:div.three.columns (:date n)]
               [:div.three.columns ((:style n) style-map)]
@@ -182,7 +197,6 @@
               (clipboard-data)]
             [:div.instructions-b15d3
               (str "Paste " ((rum/react *style) style-map)) ":"]]
-
           [:div.workspace-ca07e
             (when (rum/react *error?)
               [:div.error-disp-7c4aa (str (rum/react *error?))])
@@ -195,5 +209,4 @@
 ;; DOM mount
 ;;------------------------------------------------------------------------------
 (defn main-page []
-  (rum/mount (page-contents) (.getElementById js/document "bodyWrapper"))
-  (js/Clipboard. "#clipboard-data"))
+  (rum/mount (page-contents) (.getElementById js/document "bodyWrapper")))
