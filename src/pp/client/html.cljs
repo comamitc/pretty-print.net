@@ -30,17 +30,16 @@
       (swap! state assoc :cm cm))
     (swap! state assoc :value v :error? nil)))
 
-(def mode-map {:clj "clojure" :edn "clojure" :json "javascript"})
-
 (defn style-update [st]
   (let [style (first (:rum/args st))
         cm    (atom (:cm st))
-        v     (:value @state)]
+        v     (:value @state)
+        mode  (:mode (style style-map))]
     (when-not @cm
       (reset! cm (js/CodeMirror. (by-id "code-editor")
                                  #js {:lineNumbers true}))
       (.on @cm "change" handle-on-change))
-    (.setOption @cm "mode" (style mode-map))
+    (.setOption @cm "mode" (if (map? mode) (:from mode) mode))
     ;; maintain values when component is un-mounted and re-mounted
     (when v
       (.setValue @cm v))
@@ -116,7 +115,7 @@
          (for [kv style-map]
            [:option {:key   (first kv)
                      :value (name (first kv))}
-             (second kv)])]]]))
+             (:desc (second kv))])]]]))
 
 ;;------------------------------------------------------------------------------
 ;; Main Page Contents
@@ -135,7 +134,7 @@
                 "Format"]
               (clipboard-data)]
             [:div.instructions-b15d3
-              (str "Paste " ((rum/react *style) style-map)) ":"]]
+              (str "Paste " (:desc ((rum/react *style) style-map)) ":")]]
 
           [:div.workspace-ca07e
             (code-editor (rum/react *style))
